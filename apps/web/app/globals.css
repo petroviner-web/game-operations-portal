@@ -30,6 +30,14 @@ a {
   color: inherit;
   text-decoration: none;
 }
+.onboarding-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--green);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
 button,
 a {
   -webkit-tap-highlight-color: transparent;
@@ -164,7 +172,7 @@ nav a > span:first-child {
   flex: 1;
   background: var(--border);
 }
-.step-track i:first-child {
+.step-track i {
   background: var(--green);
 }
 .muted {

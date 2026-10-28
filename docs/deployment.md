@@ -37,6 +37,8 @@ Prijave, CAPTCHA i 2FA koraci obavljaju se na stranicama servisa. Lozinke i toke
 
 ## Pokretanje i održavanje
 
+Za traženje zahteva po `X-Request-Id`, tumačenje JSON logova, dijagnostiku i rollback koristi [operativno uputstvo](operations.md). Za predstavljanje projekta i završni pregled koristi [demo scenario](demo-and-review.md). Praćenje zahteva koristi postojeće Render logove; nije dodat plaćeni monitoring.
+
 Build: `npm ci --include=dev && npm run build`. Start: `npm run start:release`.
 
 Start skripta proverava produkcionu konfiguraciju, HTTPS origin i slaganje API adrese sa izgrađenim Next.js rewrite-om. Primenjuje nedostajuće migracije, pa pokreće oba servera. Ne ispisuje tajne u greškama. Migration lock čeka najviše 10 sekundi, SQL naredba najviše 30 sekundi; neuspeh sprečava start. Otkaz jednog servera zaustavlja drugi. SIGTERM/SIGINT zaustavlja oba, uz maksimalno 10 sekundi do prinudnog prekida. Signali na Windows-u imaju drugačije ponašanje nego na Linux-u; hosting koristi Linux.
@@ -50,5 +52,16 @@ Automatski deploy je isključen. Posle prolaska CI provera koristi ručni deploy
 - `npm run test:release`: konfiguracija, nepodudarne build/runtime adrese i gašenje drugog procesa posle otkaza prvog.
 - `npm run test:release:https`: zaseban produkcioni build `.next-release-test`, portovi 3300/4300 i lokalni HTTPS proxy na 3443. Zahteva Playwright Chromium, OpenSSL (ili `OPENSSL_PATH`) i zaseban `TEST_DATABASE_URL` sa imenom koje se završava na `_test`. Postojeći razvojni server se ne zaustavlja.
 - HTTPS test pravi jednodnevni sertifikat u ignorisanom `.local` folderu; ne menja sistemski trust store. Samo njegov browser kontekst prihvata taj sertifikat. Proverava Secure/HttpOnly/`__Host-` sesiju, CSRF, registraciju, prijavu, projekat, dva igrača, završetak sesije, analitiku, odjavu i zaštitu rute. Briše svoj test nalog i njegove podatke.
+
+Ako Windows rezerviše podrazumevane test portove, koristi slobodan port bez menjanja rezervacija sistema. Na ovom računaru 28. oktobra portovi 3443 i 4100 bili su rezervisani. PowerShell primeri (samo za testove):
+
+```powershell
+$env:RELEASE_HTTPS_PORT = '34430'
+npm run test:release:https
+$env:E2E_API_PORT = '4310'
+npm run test:e2e
+```
+
+Test i dalje proverava da port nije zauzet i ne preuzima postojeći server. Web test port ostaje 3100, a produkcioni test serveri 3300/4300. Nijedno od ovih podešavanja ne menja portove Render servisa.
 
 Stvarni rezultati su u [verification.md](verification.md). Lokalni test ne potvrđuje Render ingress, stvarnu Neon konekciju, raspoloživost Free plana ni RAM pod opterećenjem. Javna adresa je proverena; detalji su u verification.md. Portfolio demo nema verifikaciju mejla, obnovu lozinke ili garantovanu dostupnost. Trenutni peer limit prijava deli sve korisnike iza Next proxy-ja; za veći saobraćaj treba pouzdano identifikovati klijente i dodati edge limit.

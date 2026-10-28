@@ -14,7 +14,7 @@ if (process.env.DATABASE_URL) {
 }
 Object.assign(process.env, {
   DATABASE_URL: connectionString,
-  API_PORT: '4100',
+  API_PORT: process.env.E2E_API_PORT || '4100',
   APP_ORIGIN: 'http://127.0.0.1:3100',
   CSRF_SECRET: randomBytes(32).toString('hex'),
   NODE_ENV: 'test',

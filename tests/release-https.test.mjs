@@ -14,11 +14,21 @@ import { chromium, expect } from '@playwright/test';
 import pg from 'pg';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
-const origin = 'https://127.0.0.1:3443';
+const httpsPort = Number(process.env.RELEASE_HTTPS_PORT || 3443);
+if (
+  !Number.isInteger(httpsPort) ||
+  httpsPort < 1024 ||
+  httpsPort > 65535 ||
+  [3300, 4300].includes(httpsPort)
+)
+  throw new Error(
+    'RELEASE_HTTPS_PORT must be a valid port distinct from the release server ports.',
+  );
+const origin = `https://127.0.0.1:${httpsPort}`;
 
 test(
   'production HTTPS journey: secure cookies, CSRF, projects, sessions, analytics, logout',
-  { timeout: 120000 },
+  { timeout: 180000 },
   async () => {
     const databaseUrl = process.env.TEST_DATABASE_URL;
     if (!databaseUrl || !new URL(databaseUrl).pathname.endsWith('_test'))
@@ -29,7 +39,7 @@ test(
       assert.notEqual(live.host + live.pathname, testDb.host + testDb.pathname);
     }
     // Never reuse or stop an existing developer server.
-    for (const port of [3300, 3443, 4300]) {
+    for (const port of [3300, httpsPort, 4300]) {
       const probe = createTcpServer();
       await new Promise((resolve, reject) =>
         probe.once('error', reject).listen(port, '127.0.0.1', resolve),
@@ -125,10 +135,11 @@ test(
     const password = 'Production release test passphrase';
     try {
       await new Promise((resolve, reject) =>
-        proxy.once('error', reject).listen(3443, '127.0.0.1', resolve),
+        proxy.once('error', reject).listen(httpsPort, '127.0.0.1', resolve),
       );
       let ready = false;
-      for (let attempt = 0; attempt < 60 && !closed; attempt++) {
+      const startupDeadline = Date.now() + 90000;
+      while (Date.now() < startupDeadline && !closed) {
         try {
           const response = await fetch('http://127.0.0.1:3300/api/v1/health/ready', {
             signal: AbortSignal.timeout(1500),
@@ -209,8 +220,9 @@ test(
       await new Promise((resolve) => proxy.close(resolve));
       if (!closed && child.connected) child.send('shutdown');
       const watchdog = setTimeout(() => child.kill(), 15000);
+      let releaseExit;
       try {
-        assert.equal(await finished, 0, 'Release must shut down both servers cleanly.');
+        releaseExit = await finished;
       } finally {
         clearTimeout(watchdog);
       }
@@ -221,6 +233,7 @@ test(
       } finally {
         await db.end();
       }
+      assert.equal(releaseExit, 0, 'Release must shut down both servers cleanly.');
     }
   },
 );

@@ -26,8 +26,13 @@ const roadmap = [
     detail: 'Lobbies, players & session lifecycle',
     complete: true,
   },
-  { number: '05', name: 'Analytics', detail: 'Understand session activity', current: true },
-  { number: '06', name: 'Release', detail: 'Browser tests & deployment' },
+  { number: '05', name: 'Analytics', detail: 'Understand session activity', complete: true },
+  {
+    number: '06',
+    name: 'Release',
+    detail: 'Browser tests, deployment & request logs',
+    complete: true,
+  },
 ];
 
 export default function Home() {
@@ -55,7 +60,7 @@ export default function Home() {
             </span>
           </a>
           <a href="#roadmap">
-            <span aria-hidden="true">≡</span> Build roadmap
+            <span aria-hidden="true">≡</span> MVP milestones
           </a>
           <a href="/api/v1/health/ready" target="_blank" rel="noreferrer">
             <span aria-hidden="true">⌁</span> API response{' '}
@@ -65,7 +70,7 @@ export default function Home() {
           </a>
         </nav>
         <div className="sidebar-note">
-          <span className="small-label">MILESTONE 05</span>
+          <span className="small-label">MVP COMPLETE</span>
           <p>
             Good games start
             <br />
@@ -82,9 +87,9 @@ export default function Home() {
           <span className="muted">Built incrementally. Tested at every step.</span>
         </div>
         <div className="sidebar-footer">
-          <span className="avatar">DV</span>
+          <span className="avatar">GO</span>
           <div>
-            Development<span>Local workspace</span>
+            GameOps<span>Portfolio demo</span>
           </div>
         </div>
       </aside>
@@ -108,27 +113,28 @@ export default function Home() {
                 One workspace for your game projects, multiplayer sessions, and insights.
               </p>
             </div>
-            <span className="version">v0.3 / GAME PROJECTS</span>
+            <span className="version">MVP / RELEASE</span>
           </div>
+          <p className="intro onboarding-links">
+            <Link href="/register">Create your account</Link> to start a project, or{' '}
+            <Link href="/workspace">open your workspace</Link>.
+          </p>
           <ReadinessPanel />
           <section className="roadmap-section" id="roadmap" aria-labelledby="roadmap-title">
             <div className="section-heading">
               <div>
                 <p className="eyebrow">FROM FOUNDATION TO FIRST SESSION</p>
-                <h2 id="roadmap-title">The build ahead</h2>
+                <h2 id="roadmap-title">Built in six milestones</h2>
               </div>
               <span className="section-caption">Six focused milestones</span>
             </div>
             <div className="roadmap-grid">
               {roadmap.map((step) => (
-                <article
-                  className={`roadmap-card ${step.current ? 'current' : ''}`}
-                  key={step.number}
-                >
+                <article className="roadmap-card" key={step.number}>
                   <div className="card-top">
                     <span className="step-number">{step.number}</span>
-                    <span className={`phase ${step.current ? 'phase-current' : ''}`}>
-                      {step.current ? 'Current milestone' : step.complete ? 'Complete' : 'Planned'}
+                    <span className="phase phase-current">
+                      {step.complete ? 'Complete' : 'Planned'}
                     </span>
                   </div>
                   <h3>{step.name}</h3>
@@ -139,7 +145,7 @@ export default function Home() {
           </section>
           <footer className="main-footer">
             <span>
-              GAMEOPS <span className="footer-dot">/</span> A developer portal in progress
+              GAMEOPS <span className="footer-dot">/</span> A developer portal portfolio demo
             </span>
             <span>
               Next.js <span>·</span> NestJS <span>·</span> PostgreSQL

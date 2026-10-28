@@ -4,23 +4,20 @@ import {
   ExceptionFilter,
   HttpException,
   INestApplication,
-  Logger,
 } from '@nestjs/common';
 import cookieParser from 'cookie-parser';
 import { json } from 'express';
 import type { Response, NextFunction } from 'express';
-import { randomUUID } from 'node:crypto';
 import type { AuthRequest } from './auth/auth.types';
+import { requestTelemetry } from './request-telemetry';
 
 @Catch()
 class ApiExceptionFilter implements ExceptionFilter {
-  private readonly logger = new Logger(ApiExceptionFilter.name);
   catch(error: unknown, host: ArgumentsHost) {
     const request = host.switchToHttp().getRequest<AuthRequest>();
     const response = host.switchToHttp().getResponse<Response>();
     const status = error instanceof HttpException ? error.getStatus() : 500;
     const details = error instanceof HttpException ? error.getResponse() : null;
-    if (status >= 500) this.logger.error(`Request failed (${request.requestId || 'unknown'}).`);
     response.status(status).json({
       statusCode: status,
       ...(details === null
@@ -38,9 +35,8 @@ class ApiExceptionFilter implements ExceptionFilter {
 
 export function configureApp(app: INestApplication) {
   app.setGlobalPrefix('api/v1');
+  app.use(requestTelemetry());
   app.use((request: AuthRequest, response: Response, next: () => void) => {
-    request.requestId = randomUUID();
-    response.setHeader('X-Request-Id', request.requestId);
     response.setHeader('X-Content-Type-Options', 'nosniff');
     response.setHeader('Cache-Control', 'no-store');
     next();

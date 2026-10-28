@@ -9,6 +9,7 @@ export default [
       '**/dist-test/**',
       '**/.next/**',
       '**/.next-e2e/**',
+      '**/.next-release-test/**',
       '**/next-env.d.ts',
       '**/node_modules/**',
     ],

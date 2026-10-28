@@ -1,6 +1,7 @@
 node_modules
 .next
 .next-e2e
+.next-release-test
 dist
 dist-test
 .local

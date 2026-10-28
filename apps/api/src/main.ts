@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import { NestFactory } from '@nestjs/core';
+import { ConsoleLogger } from '@nestjs/common';
 import { AppModule } from './app.module';
 import { readConfig } from './config';
 import { readAuthConfig } from './auth/auth.config';
@@ -8,7 +9,10 @@ import { configureApp } from './configure-app';
 async function bootstrap() {
   const config = readConfig();
   readAuthConfig();
-  const app = await NestFactory.create(AppModule, { bodyParser: false });
+  const app = await NestFactory.create(AppModule, {
+    bodyParser: false,
+    logger: new ConsoleLogger({ json: process.env.NODE_ENV === 'production' }),
+  });
   configureApp(app);
   app.enableShutdownHooks();
   await app.listen(config.port, '127.0.0.1');

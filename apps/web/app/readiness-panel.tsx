@@ -66,17 +66,17 @@ export function ReadinessPanel() {
   const title = checking
     ? 'Checking your environment'
     : ready
-      ? 'Your foundation is ready'
+      ? 'Your workspace is ready'
       : health.status === 'database-down'
         ? 'Your database needs attention'
         : 'Waiting for your API';
   const description = checking
     ? 'Connecting to the API and checking the database schema.'
     : ready
-      ? 'The API is responding and PostgreSQL has the required migration. You’re ready for the next milestone.'
+      ? 'The API and database are ready. Sign in to manage projects, simulate sessions, and explore analytics.'
       : health.status === 'database-down'
-        ? 'The API is responding. Start PostgreSQL and apply the migrations, then check again.'
-        : 'The API could not be reached or returned an unexpected response. Start the API, then check again.';
+        ? 'The API is responding, but the database is not ready. Wait a moment and check again. If this continues, contact the portal owner.'
+        : 'The service may be starting or temporarily unavailable. Wait a moment and check again. If this continues, contact the portal owner.';
 
   return (
     <section className="health-panel" aria-labelledby="health-title">

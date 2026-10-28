@@ -1,3 +1,22 @@
+# Final MVP slice — 28 October 2026
+
+Added request completion telemetry, production JSON logs, finished-MVP landing copy and direct registration links, operations/rollback notes and the interview demo/review guide. No schema or hosting-plan change.
+
+| Check | Result |
+| --- | --- |
+| ESLint | Passed after excluding generated `.next-release-test` output |
+| TypeScript | Passed |
+| Unit/HTTP tests | 9 passed, including request-ID correlation, input/exception exclusion, unknown routes, malformed JSON and disconnect behavior |
+| PostgreSQL integration | 41 passed |
+| Release configuration/process tests | 4 passed |
+| Production builds | Passed for both normal and isolated HTTPS-test builds |
+| Production HTTPS browser journey | 1 passed, 24.8 seconds, no retries in final run; production JSON request events observed |
+| Affected desktop/mobile browser journeys | 6 passed, 1.4 minutes; status/retry, keyboard focus and horizontal overflow |
+
+Initial HTTP checks were blocked by sandbox loopback permissions and passed with local execution permissions. Windows had also reserved 3435–3534 and 4083–4182, which prevented test ports 3443 and 4100 from binding. The harness now accepts `RELEASE_HTTPS_PORT` and `E2E_API_PORT`; final runs used 34430 and 4310 without changing Windows reservations or production ports. One HTTPS startup exceeded the old roughly 30-second polling window under concurrent local work; the harness now uses an explicit 90-second startup deadline within a 180-second test budget. The final standalone journey passed. Generated build files are now excluded from ESLint/Prettier. Test-account cleanup precedes the release-exit assertion.
+
+The complete 28-test development browser suite was not rerun in this slice: affected overview journeys and the real production HTTPS end-to-end journey were run, alongside all API/database checks. GitHub Actions, production load, automated alerting and backup restore are not claimed. Deployment of this final slice is recorded separately from the initial public release below.
+
 # Public deployment verification — 28 October 2026
 
 Live URL: [GameOps portal](https://gameops-portal.onrender.com/). Deployed application commit: `31645c7af1b51f5594c3afd3e49a81c500ab250c` in the private `petroviner-web/game-operations-portal` repository.

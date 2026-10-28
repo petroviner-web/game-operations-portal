@@ -2,7 +2,7 @@
 
 An incremental interview project using Next.js, TypeScript, NestJS, and PostgreSQL.
 
-**Current scope: milestones 1–5, foundation, authentication, game projects, multiplayer simulation, and project analytics.** Manage projects, run synthetic playtests, and inspect session activity and duration by UTC date. Milestone 6 release preparation is in progress: a Render Free + Neon Free configuration, supervised production start and a local HTTPS production journey are available. The public demo is live at [gameops-portal.onrender.com](https://gameops-portal.onrender.com/); see [deployment guide](docs/deployment.md) for free-tier limits and operation.
+**Current scope: six-milestone portfolio MVP.** Manage projects, run synthetic playtests, and inspect session activity and duration by UTC date. The release includes Render Free + Neon Free hosting, supervised production start, production HTTPS tests and safe request telemetry. The public demo is at [gameops-portal.onrender.com](https://gameops-portal.onrender.com/); see [deployment guide](docs/deployment.md), [operations](docs/operations.md) and the dated [verification record](docs/verification.md) for the version verified and its limits.
 
 ## Run locally
 
@@ -54,7 +54,7 @@ Browser -> Next.js :3000 -> /api/v1/* rewrite -> NestJS :4000 -> PostgreSQL :543
 - `GET /api/v1/health/ready` returns 200 only if PostgreSQL is reachable, migration `004_game_sessions.sql` is recorded, and users/auth-session/rate-limit/project/game-session/participant tables exist. Otherwise it returns 503. Responses use `Cache-Control: no-store`; driver diagnostics are not exposed.
 - The browser distinguishes API failure from database failure, times out after five seconds, and supports retry. It does not poll in the background.
 
-NestJS protects endpoints by default; `@Public()` explicitly opts out of authentication. Public mutations still require CSRF/origin protection. Both servers bind to loopback. See [authentication design](docs/authentication.md) for endpoints, security decisions, and scope limits before public deployment.
+NestJS protects endpoints by default; `@Public()` explicitly opts out of authentication. Public mutations still require CSRF/origin protection. Locally both servers bind to loopback; on Render only Next.js exposes the public port. See [authentication design](docs/authentication.md) for endpoints, security decisions, and scope limits. Request logs contain a generated ID, route template, status, duration and completion outcome; production Nest logs use JSON without request payloads or credentials.
 
 ## Database and migrations
 
@@ -78,6 +78,6 @@ Playwright starts its own API on 4100 and Next.js on 3100 with an isolated `.nex
 
 `.github/workflows/ci.yml` runs lint, type checking, API tests, PostgreSQL integration tests, production builds, and Chromium browser tests. The workflow assumes **this folder is the repository root**. If keeping the surrounding thesis repository, move the workflow into that repository's root and set the working directory and npm cache dependency path accordingly.
 
-## Next review checkpoint
+## Final review checkpoint
 
-Before [milestone 6: release](docs/implementation-plan.md), review [analytics definitions, consistency and limits](docs/analytics.md). Explain the difference between event cohorts and current snapshots, and why missing duration is null. Then review production configuration, observability and deployment readiness.
+Follow the [five-minute demo and engineering questions](docs/demo-and-review.md), then explain a failed request using the [operations guide](docs/operations.md). Review [analytics definitions, consistency and limits](docs/analytics.md): explain event cohorts versus current snapshots and why missing duration is null. Six milestones complete the MVP; real game networking, password recovery, load guarantees and tested backup restoration remain deliberate follow-up work.

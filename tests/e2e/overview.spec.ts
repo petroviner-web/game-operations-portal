@@ -16,14 +16,14 @@ test('reports readiness and supports a fresh check without horizontal overflow',
     });
   });
   await page.goto('/');
-  await expect(page.getByRole('heading', { name: 'Your foundation is ready' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Your workspace is ready' })).toBeVisible();
   await page.getByRole('button', { name: 'Check again' }).click();
   await expect(page.getByRole('button', { name: 'Check again' })).toBeEnabled();
   expect(calls).toBeGreaterThanOrEqual(2);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(
     true,
   );
-  await page.getByRole('link', { name: 'Build roadmap' }).click();
+  await page.getByRole('link', { name: 'MVP milestones' }).click();
   await expect(page).toHaveURL(/#roadmap$/);
 });
 
@@ -44,7 +44,7 @@ test('shows database failure and recovers after retry', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Your database needs attention' })).toBeVisible();
   ready = true;
   await page.getByRole('button', { name: 'Check again' }).click();
-  await expect(page.getByRole('heading', { name: 'Your foundation is ready' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Your workspace is ready' })).toBeVisible();
 });
 
 test('handles an unavailable API and keeps keyboard navigation usable', async ({ page }) => {
