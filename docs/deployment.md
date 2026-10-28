@@ -1,6 +1,6 @@
 # Besplatna objava portala
 
-Status: priprema za objavu. Javni deployment još nije izvršen. Render i Neon nalozi su otvoreni. Neon projekat `geops` ima Free plan, PostgreSQL 18 i region Frankfurt.
+Status: objavljeno i provereno 28. oktobra 2026. Portal: [gameops-portal.onrender.com](https://gameops-portal.onrender.com/). Kod: [privatni GitHub repozitorijum](https://github.com/petroviner-web/game-operations-portal). Render servis `gameops-portal` koristi Free plan; Neon projekat `geops` koristi Free plan, PostgreSQL 18 i region Frankfurt. Nije dodat način plaćanja niti aktiviran plaćeni servis tokom ove objave.
 
 ## Arhitektura i trošak
 
@@ -51,4 +51,4 @@ Automatski deploy je isključen. Posle prolaska CI provera koristi ručni deploy
 - `npm run test:release:https`: zaseban produkcioni build `.next-release-test`, portovi 3300/4300 i lokalni HTTPS proxy na 3443. Zahteva Playwright Chromium, OpenSSL (ili `OPENSSL_PATH`) i zaseban `TEST_DATABASE_URL` sa imenom koje se završava na `_test`. Postojeći razvojni server se ne zaustavlja.
 - HTTPS test pravi jednodnevni sertifikat u ignorisanom `.local` folderu; ne menja sistemski trust store. Samo njegov browser kontekst prihvata taj sertifikat. Proverava Secure/HttpOnly/`__Host-` sesiju, CSRF, registraciju, prijavu, projekat, dva igrača, završetak sesije, analitiku, odjavu i zaštitu rute. Briše svoj test nalog i njegove podatke.
 
-Stvarni rezultati su u [verification.md](verification.md). Lokalni test ne potvrđuje Render ingress, stvarnu Neon konekciju, raspoloživost Free plana ni RAM pod opterećenjem. Javnu adresu proveravamo posle objave. Portfolio demo nema verifikaciju mejla, obnovu lozinke ili garantovanu dostupnost. Trenutni peer limit prijava deli sve korisnike iza Next proxy-ja; za veći saobraćaj treba pouzdano identifikovati klijente i dodati edge limit.
+Stvarni rezultati su u [verification.md](verification.md). Lokalni test ne potvrđuje Render ingress, stvarnu Neon konekciju, raspoloživost Free plana ni RAM pod opterećenjem. Javna adresa je proverena; detalji su u verification.md. Portfolio demo nema verifikaciju mejla, obnovu lozinke ili garantovanu dostupnost. Trenutni peer limit prijava deli sve korisnike iza Next proxy-ja; za veći saobraćaj treba pouzdano identifikovati klijente i dodati edge limit.

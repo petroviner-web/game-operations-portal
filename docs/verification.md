@@ -1,3 +1,17 @@
+# Public deployment verification — 28 October 2026
+
+Live URL: [GameOps portal](https://gameops-portal.onrender.com/). Deployed application commit: `31645c7af1b51f5594c3afd3e49a81c500ab250c` in the private `petroviner-web/game-operations-portal` repository.
+
+- Render dashboard confirmed **Deploy succeeded | Live**, service `srv-dbh084mtlv9c73dhv5b0`, **Free** instance, initial deployment duration 1m37s.
+- Neon console confirmed **Free**, PostgreSQL 18, Frankfurt, project `geops`. The direct database connection uses `sslmode=verify-full` and is stored in Render's `DATABASE_URL`, not in source control.
+- Public HTTPS live/readiness returned 200. Anonymous projects returned 401 and workspace redirected to login.
+- One synthetic account completed registration, logout/login, project creation, two-player lobby, start/end, analytics reads and authenticated dashboard rendering against the real hosted database.
+- The production session used Secure/HttpOnly/__Host- cookies. Cross-origin mutation returned 403. After logout, `/auth/me` returned 401 and the protected dashboard redirected to login.
+- The smoke session was ended and its project archived; no active simulated players remain. One isolated synthetic account and archived project are retained. Its generated credentials are kept only in ignored `.local/live-smoke-account.json`, never in GitHub. No existing user data was changed.
+- `npm audit --omit=dev`: 0 known vulnerabilities at verification time. This is an advisory check, not a security guarantee.
+
+A browser independently displayed the public landing page and its live API/database-ready state. The full browser journey was verified locally over production HTTPS; the hosted full journey used HTTP requests and server-rendered dashboard HTML. No hosting payment method was added and no paid resource was created. CI was skipped on the initial source commits to avoid consuming private-repository Actions quota; GitHub Actions execution is not claimed. Free-tier sleeping and quotas still apply. Load capacity, backup restoration and ongoing monitoring have not been validated.
+
 # Milestone 6 release preparation (in progress)
 
 Local verification on 27–28 October 2026, Windows and Node.js 24.12.0:
@@ -10,7 +24,7 @@ Local verification on 27–28 October 2026, Windows and Node.js 24.12.0:
 | PostgreSQL integration | 41 passed |
 | Production HTTPS browser journey | 1 passed, real PostgreSQL, Chromium, no retries in the final run |
 | Neon project | Free plan, PostgreSQL 18, Frankfurt confirmed in console |
-| Public Render deployment / real Neon connection | Pending |
+| Public Render deployment / real Neon connection | Passed; see public verification above |
 
 The new journey uses NODE_ENV=production, a local TLS ingress and the real built Next.js/NestJS servers. It verifies registration, secure HttpOnly __Host- session cookies, denied cross-origin mutation, login, project creation, a two-player session, completion, analytics, logout and protected navigation. It cleans up its test account. The process test verifies sibling termination after an unexpected server exit.
 

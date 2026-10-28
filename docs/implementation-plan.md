@@ -29,7 +29,7 @@ Implemented per-project analytics: creation/start/completion counts, UTC daily s
 
 ## Milestone 6 — Release (in progress)
 
-Added the Render Free + Neon Free release configuration, supervised production start, bounded migrations and an HTTPS production browser journey covering sign-in through analytics and logout. Existing accessibility coverage remains in the desktop/mobile suite. Deployment instructions and limitations are in [deployment.md](deployment.md). Public hosting verification and the remaining observability review are still pending.
+Added the Render Free + Neon Free release configuration, supervised production start, bounded migrations and an HTTPS production browser journey covering sign-in through analytics and logout. Existing accessibility coverage remains in the desktop/mobile suite. Deployment instructions and limitations are in [deployment.md](deployment.md). The portal is deployed on Render Free with Neon Free, and the public HTTPS/API journey passed on 28 October 2026. The remaining observability review is a follow-up; existing request IDs and safe error logs remain in place.
 
 ## Design decisions
 

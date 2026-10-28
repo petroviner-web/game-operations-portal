@@ -2,7 +2,7 @@
 
 An incremental interview project using Next.js, TypeScript, NestJS, and PostgreSQL.
 
-**Current scope: milestones 1–5, foundation, authentication, game projects, multiplayer simulation, and project analytics.** Manage projects, run synthetic playtests, and inspect session activity and duration by UTC date. Milestone 6 release preparation is in progress: a Render Free + Neon Free configuration, supervised production start and a local HTTPS production journey are available. Public deployment is not yet verified; see [deployment guide](docs/deployment.md).
+**Current scope: milestones 1–5, foundation, authentication, game projects, multiplayer simulation, and project analytics.** Manage projects, run synthetic playtests, and inspect session activity and duration by UTC date. Milestone 6 release preparation is in progress: a Render Free + Neon Free configuration, supervised production start and a local HTTPS production journey are available. The public demo is live at [gameops-portal.onrender.com](https://gameops-portal.onrender.com/); see [deployment guide](docs/deployment.md) for free-tier limits and operation.
 
 ## Run locally
 
