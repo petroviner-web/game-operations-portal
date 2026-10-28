@@ -1,0 +1,29 @@
+{
+  "name": "@game-ops/api",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "npm run build && concurrently -k \"tsc -p tsconfig.build.json --watch --preserveWatchOutput\" \"node --watch dist/main.js\"",
+    "build": "tsc -p tsconfig.build.json",
+    "start": "node --env-file-if-exists=../../.env dist/main.js",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "tsc -p tsconfig.test.json && node --test dist-test/test/health.test.js dist-test/test/config.test.js dist-test/test/auth-security.test.js dist-test/test/analytics.test.js",
+    "test:integration": "tsc -p tsconfig.test.json && node --env-file-if-exists=../../.env --test --test-concurrency=1 dist-test/test/database.integration.test.js dist-test/test/auth.integration.test.js dist-test/test/projects.integration.test.js dist-test/test/sessions.integration.test.js dist-test/test/analytics.integration.test.js"
+  },
+  "dependencies": {
+    "@nestjs/common": "12.2.0",
+    "@nestjs/core": "12.2.0",
+    "@nestjs/platform-express": "12.2.0",
+    "argon2": "^0.45.1",
+    "cookie-parser": "^1.4.7",
+    "pg": "^8.16.3",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.2",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.10",
+    "@types/express": "^5.0.6",
+    "@types/pg": "^8.15.5"
+  }
+}

@@ -1,0 +1,215 @@
+.analytics-presets {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin: 24px 0;
+}
+.analytics-presets > span {
+  color: var(--muted);
+  font-size: 13px;
+}
+.analytics-range {
+  padding: 24px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 40px;
+}
+.analytics-date-fields {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 20px;
+}
+.analytics-date-fields .form-field {
+  flex: 1;
+  min-width: 200px;
+}
+.analytics-date-fields input {
+  background: var(--bg);
+  min-width: 0;
+}
+.analytics-range .form-error {
+  margin-bottom: 20px;
+}
+.analytics-range .field-hint {
+  margin-bottom: 0;
+}
+.analytics-section-heading,
+.analytics-chart-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+.analytics-section-heading h2,
+.analytics-chart-heading h2 {
+  font-size: 26px;
+  margin: 0;
+}
+.analytics-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+.analytics-metric {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 24px;
+  min-width: 0;
+}
+.analytics-metric h3 {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--muted);
+  margin: 0 0 22px;
+}
+.analytics-metric strong {
+  display: block;
+  font: 34px var(--mono);
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+.analytics-metric p {
+  font-size: 13px;
+  color: var(--muted);
+  margin: 18px 0 0;
+  line-height: 1.7;
+}
+.analytics-chart {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 28px;
+  margin-top: 28px;
+  background: var(--panel);
+}
+.analytics-chart-total {
+  color: var(--green);
+  font: 13px var(--mono);
+}
+.analytics-scale,
+.analytics-axis {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font: 12px var(--mono);
+  color: var(--muted);
+  margin: 20px 0 12px;
+}
+.analytics-bars {
+  display: block;
+  width: 100%;
+  height: 220px;
+  overflow: visible;
+}
+.analytics-gridline {
+  stroke: var(--border);
+}
+.analytics-bar {
+  fill: var(--green);
+}
+.analytics-axis {
+  margin: 12px 0 22px;
+}
+.analytics-table {
+  border-top: 1px solid var(--border);
+  padding-top: 14px;
+}
+.analytics-table summary {
+  display: list-item;
+  cursor: pointer;
+  padding: 12px 0;
+  color: var(--green);
+  min-height: 44px;
+}
+.analytics-table summary:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 4px;
+}
+.analytics-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.analytics-table caption {
+  text-align: left;
+  color: var(--muted);
+  padding: 18px 0;
+}
+.analytics-table th,
+.analytics-table td {
+  text-align: left;
+  padding: 12px 8px;
+  border-bottom: 1px solid var(--border);
+}
+.analytics-table tbody th {
+  font-weight: 400;
+}
+.analytics-table tr > :last-child {
+  text-align: right;
+}
+.analytics-current {
+  margin-top: 40px;
+}
+.analytics-current-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.analytics-current .analytics-metric strong {
+  color: var(--green);
+}
+.analytics-snapshot-time {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.8;
+}
+.analytics-note {
+  border-top: 1px solid var(--border);
+  padding-top: 28px;
+  margin-top: 32px;
+}
+.analytics-note h2 {
+  font-size: 22px;
+}
+.analytics-note p {
+  color: var(--muted);
+  max-width: 850px;
+  line-height: 1.8;
+}
+.step-track i:nth-child(5) {
+  background: var(--green);
+}
+@media (max-width: 1000px) {
+  .analytics-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 540px) {
+  .analytics-range,
+  .analytics-chart,
+  .analytics-metric {
+    padding: 20px;
+  }
+  .analytics-date-fields {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .analytics-date-fields .form-field {
+    min-width: 0;
+  }
+  .analytics-metrics,
+  .analytics-current-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .analytics-metric strong {
+    font-size: 32px;
+  }
+  .analytics-bars {
+    height: 180px;
+  }
+}

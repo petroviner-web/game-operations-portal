@@ -81,4 +81,3 @@ Playwright starts its own API on 4100 and Next.js on 3100 with an isolated `.nex
 ## Next review checkpoint
 
 Before [milestone 6: release](docs/implementation-plan.md), review [analytics definitions, consistency and limits](docs/analytics.md). Explain the difference between event cohorts and current snapshots, and why missing duration is null. Then review production configuration, observability and deployment readiness.
-

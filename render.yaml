@@ -1,0 +1,29 @@
+# Deploy ONLY the game-operations-portal directory as the Git repository root.
+# Database is Neon Free, supplied separately; no expiring Render database.
+services:
+  - type: web
+    name: gameops-portal
+    runtime: node
+    plan: free
+    region: frankfurt
+    buildCommand: npm ci --include=dev && npm run build
+    startCommand: npm run start:release
+    healthCheckPath: /api/v1/health/ready
+    autoDeployTrigger: 'off'
+    envVars:
+      - key: NODE_VERSION
+        value: '24.12.0'
+      - key: NODE_ENV
+        value: production
+      - key: NEXT_TELEMETRY_DISABLED
+        value: '1'
+      - key: WEB_HOST
+        value: 0.0.0.0
+      - key: API_PORT
+        value: '4000'
+      - key: API_ORIGIN
+        value: http://127.0.0.1:4000
+      - key: CSRF_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        sync: false

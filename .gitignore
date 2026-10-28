@@ -1,0 +1,15 @@
+node_modules/
+.next/
+.next-e2e/
+.next-release-test/
+dist/
+dist-test/
+*.tsbuildinfo
+.env
+.env.*
+!.env.example
+.local/
+playwright-report/
+test-results/
+coverage/
+*.log

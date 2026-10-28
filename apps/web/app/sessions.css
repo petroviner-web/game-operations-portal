@@ -1,0 +1,162 @@
+.simulation-list-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(280px, 1fr);
+  gap: 32px;
+  align-items: start;
+}
+.simulation-session-list {
+  display: grid;
+  gap: 18px;
+}
+.simulation-console {
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--panel);
+  padding: 32px;
+}
+.simulation-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+.simulation-notice {
+  min-height: 24px;
+  color: var(--green);
+  font-size: 14px;
+}
+.simulation-occupancy {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin: 24px 0 16px;
+}
+.simulation-occupancy strong {
+  font: 36px var(--mono);
+}
+.simulation-occupancy span {
+  color: var(--muted);
+  font-size: 14px;
+}
+.simulation-progress {
+  width: 100%;
+  height: 8px;
+  accent-color: var(--green);
+  border: 0;
+  border-radius: 5px;
+  background: var(--bg);
+}
+.simulation-progress::-webkit-progress-bar {
+  background: var(--bg);
+  border-radius: 5px;
+}
+.simulation-progress::-webkit-progress-value {
+  background: var(--green);
+  border-radius: 5px;
+}
+.simulation-progress::-moz-progress-bar {
+  background: var(--green);
+  border-radius: 5px;
+}
+.simulation-roster {
+  list-style: none;
+  padding: 0;
+  margin: 26px 0;
+}
+.simulation-roster li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+}
+.player-number {
+  font: 12px var(--mono);
+  color: var(--muted);
+}
+.player-name {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.player-presence {
+  color: var(--green);
+  font-size: 12px;
+}
+.simulation-roster .secondary-button {
+  padding: 10px 14px;
+}
+.simulation-empty {
+  padding: 28px 0;
+  color: var(--muted);
+  line-height: 1.8;
+}
+.simulation-join {
+  display: flex;
+  gap: 14px;
+  align-items: end;
+  margin-top: 24px;
+}
+.simulation-join .form-field {
+  flex: 1;
+  min-width: 0;
+}
+.simulation-join input {
+  background: var(--bg);
+}
+.simulation-actions {
+  border-top: 1px solid var(--border);
+  margin-top: 28px;
+  padding-top: 18px;
+}
+.simulation-steps {
+  padding-left: 22px;
+  color: var(--green);
+}
+.simulation-steps li {
+  padding: 10px 0 0 8px;
+}
+.simulation-steps strong {
+  color: var(--text);
+}
+.simulation-times {
+  border-top: 1px solid var(--border);
+  padding-top: 20px;
+  font-size: 13px;
+}
+.simulation-times dt {
+  color: var(--muted);
+  margin-top: 16px;
+}
+.simulation-times dd {
+  margin: 6px 0 0;
+  font-family: var(--mono);
+}
+.step-track i:nth-child(4) {
+  background: var(--green);
+}
+@media (max-width: 900px) {
+  .simulation-list-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 720px) {
+  .simulation-console {
+    padding: 24px 20px;
+  }
+  .simulation-top {
+    align-items: start;
+    flex-wrap: wrap;
+  }
+  .simulation-join {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .player-presence {
+    display: none;
+  }
+  .simulation-roster li {
+    gap: 10px;
+  }
+}

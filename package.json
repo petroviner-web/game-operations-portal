@@ -1,0 +1,46 @@
+{
+  "name": "game-operations-portal",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "engines": {
+    "node": ">=22.16.0 <25"
+  },
+  "scripts": {
+    "setup": "node scripts/setup-env.mjs",
+    "dev": "node --env-file-if-exists=.env node_modules/concurrently/dist/bin/concurrently.js -k -n API,WEB \"npm run dev -w @game-ops/api\" \"npm run dev -w @game-ops/web\"",
+    "build": "npm run build --workspaces",
+    "start:release": "node scripts/start-release.mjs",
+    "test:release": "node --test tests/release-config.test.mjs",
+    "test:release:https": "node scripts/build-release-test.mjs && node --env-file-if-exists=.env --test tests/release-https.test.mjs",
+    "lint": "eslint apps --max-warnings=0",
+    "typecheck": "npm run typecheck --workspaces",
+    "test": "npm run test -w @game-ops/api",
+    "test:integration": "npm run test:integration -w @game-ops/api",
+    "test:e2e": "playwright test",
+    "db:up": "docker compose --env-file .env -f infra/compose.yaml up -d --wait",
+    "db:down": "docker compose --env-file .env -f infra/compose.yaml down",
+    "db:local": "node --env-file-if-exists=.env scripts/local-db.mjs",
+    "db:migrate": "node --env-file-if-exists=.env scripts/migrate.mjs"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.0",
+    "@playwright/test": "1.64.1",
+    "@types/node": "^22.18.0",
+    "concurrently": "^9.2.0",
+    "embedded-postgres": "18.4.0-beta.17",
+    "eslint": "^9.39.0",
+    "eslint-config-next": "16.4.3",
+    "prettier": "^3.9.10",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.46.0"
+  },
+  "dependencies": {
+    "pg": "^8.16.3"
+  },
+  "overrides": {
+    "multer": "2.5.0"
+  }
+}
