@@ -8,7 +8,7 @@ import {
 } from '../../../../../lib/analytics';
 import { AnalyticsRangeForm } from '../../../../components/analytics-range-form';
 import { AnalyticsChart } from '../../../../components/analytics-chart';
-export const metadata = { title: 'Project analytics / GameOps' };
+export const metadata = { title: 'Project analytics / GameOpen' };
 export default async function AnalyticsPage({
   params,
   searchParams,

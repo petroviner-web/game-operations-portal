@@ -3,7 +3,7 @@ import { serverApi } from '../../lib/server-api';
 import { engines, formatProjectDate, type ProjectPage } from '../../lib/projects';
 import { InvalidProjectPage, ProjectUnavailable } from '../components/project-feedback';
 
-export const metadata = { title: 'Your projects / GameOps' };
+export const metadata = { title: 'Your projects / GameOpen' };
 export default async function WorkspacePage({
   searchParams,
 }: {
@@ -111,7 +111,7 @@ export default async function WorkspacePage({
                   <span className="cover-orbit" />
                   <span className="cover-engine">{engines[project.engine]}</span>
                   <span className="cover-label">
-                    GAMEOPS
+                    GAMEOPEN
                     <br />
                     PROJECT LIBRARY
                   </span>

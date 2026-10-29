@@ -7,7 +7,7 @@ import './analytics.css';
 import './launcher.css';
 
 export const metadata: Metadata = {
-  title: 'GameOps / Developer console',
+  title: 'GameOpen / Developer console',
   description:
     'A developer workspace for game projects, multiplayer sessions, and operational analytics.',
 };

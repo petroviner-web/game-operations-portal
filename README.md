@@ -1,4 +1,4 @@
-# GameOps — Developer portal
+# GameOpen — Developer portal
 
 An incremental interview project using Next.js, TypeScript, NestJS, and PostgreSQL.
 

@@ -4,7 +4,7 @@ import { serverApi } from '../../../../../../lib/server-api';
 import type { Project } from '../../../../../../lib/projects';
 import type { SessionDetail } from '../../../../../../lib/sessions';
 import { SessionSimulator } from '../../../../../components/session-simulator';
-export const metadata = { title: 'Session simulator / GameOps' };
+export const metadata = { title: 'Session simulator / GameOpen' };
 export default async function SimulatorPage({
   params,
 }: {

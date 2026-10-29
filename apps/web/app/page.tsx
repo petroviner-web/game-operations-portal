@@ -42,9 +42,9 @@ export default function Home() {
         Skip to content
       </a>
       <aside className="sidebar" aria-label="Workspace navigation">
-        <Link className="brand" href="/" aria-label="GameOps home">
+        <Link className="brand" href="/" aria-label="GameOpen home">
           <span className="brand-mark" aria-hidden="true" />
-          GameOps<span className="brand-slash">/</span>
+          GameOpen<span className="brand-slash">/</span>
         </Link>
         <div className="workspace-label">DEVELOPER WORKSPACE</div>
         <nav>
@@ -87,7 +87,7 @@ export default function Home() {
         <div className="sidebar-footer">
           <span className="avatar">GO</span>
           <div>
-            GameOps<span>Portfolio demo</span>
+            GameOpen<span>Portfolio demo</span>
           </div>
         </div>
       </aside>
@@ -97,7 +97,7 @@ export default function Home() {
             Workspace <span className="breadcrumb-separator">/</span> <strong>Overview</strong>
           </span>
           <Link className="environment" href="/login">
-            <span aria-hidden="true">◇</span> Sign in to GameOps
+            <span aria-hidden="true">◇</span> Sign in to GameOpen
           </Link>
         </header>
         <main id="main">
@@ -143,7 +143,7 @@ export default function Home() {
           </section>
           <footer className="main-footer">
             <span>
-              GAMEOPS <span className="footer-dot">/</span> A developer portal portfolio demo
+              GAMEOPEN <span className="footer-dot">/</span> A developer portal portfolio demo
             </span>
             <span>
               Next.js <span>·</span> NestJS <span>·</span> PostgreSQL

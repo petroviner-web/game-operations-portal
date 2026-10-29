@@ -5,7 +5,7 @@ import { engines, formatProjectDate, type Project } from '../../../../lib/projec
 import { ProjectUnavailable } from '../../../components/project-feedback';
 import { ProjectLifecycle } from '../../../components/project-lifecycle';
 
-export const metadata = { title: 'Project details / GameOps' };
+export const metadata = { title: 'Project details / GameOpen' };
 export default async function ProjectDetail({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   if (!/^[a-f0-9-]{36}$/i.test(id)) notFound();

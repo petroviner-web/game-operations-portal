@@ -140,7 +140,7 @@ export function AuthForm({ mode }: { mode: 'login' | 'register' }) {
           <span aria-hidden="true">→</span>
         </button>
         <p className="auth-switch">
-          {registering ? 'Already have an account?' : 'New to GameOps?'}{' '}
+          {registering ? 'Already have an account?' : 'New to GameOpen?'}{' '}
           <Link href={registering ? '/login' : '/register'}>
             {registering ? 'Sign in' : 'Create an account'}
           </Link>

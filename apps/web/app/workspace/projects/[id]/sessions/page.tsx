@@ -4,7 +4,7 @@ import { serverApi } from '../../../../../lib/server-api';
 import { type Project, formatProjectDate } from '../../../../../lib/projects';
 import { type GameSession, sessionLabel } from '../../../../../lib/sessions';
 import { SessionCreate } from '../../../../components/session-create';
-export const metadata = { title: 'Multiplayer sessions / GameOps' };
+export const metadata = { title: 'Multiplayer sessions / GameOpen' };
 export default async function SessionsPage({
   params,
   searchParams,

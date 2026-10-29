@@ -21,7 +21,7 @@ export default async function WorkspaceLayout({ children }: { children: React.Re
       <aside className="workspace-header" aria-label="Workspace navigation">
         <Link className="brand" href="/workspace">
           <span className="brand-mark" aria-hidden="true" />
-          GameOps<span className="brand-slash">/</span>
+          GameOpen<span className="brand-slash">/</span>
         </Link>
         <div className="workspace-profile">
           <span className="workspace-profile-avatar" aria-hidden="true">
@@ -43,7 +43,7 @@ export default async function WorkspaceLayout({ children }: { children: React.Re
           <Link href="/workspace?state=archived">
             <span aria-hidden="true">▣</span> Archived
           </Link>
-          <span>GAMEOPS</span>
+          <span>GAMEOPEN</span>
           <Link href="/">
             <span aria-hidden="true">◉</span> System overview
           </Link>
@@ -54,12 +54,12 @@ export default async function WorkspaceLayout({ children }: { children: React.Re
       </aside>
       <main className="workspace-main" id="workspace-main">
         <div className="workspace-account">
-          <span className="eyebrow">GAMEOPS / DEVELOPER WORKSPACE</span>
+          <span className="eyebrow">GAMEOPEN / DEVELOPER WORKSPACE</span>
           <span>Project library</span>
         </div>
         {children}
         <footer className="main-footer">
-          <span>GAMEOPS / YOUR DEVELOPER WORKSPACE</span>
+          <span>GAMEOPEN / YOUR DEVELOPER WORKSPACE</span>
           <span>Build. Simulate. Understand.</span>
         </footer>
       </main>

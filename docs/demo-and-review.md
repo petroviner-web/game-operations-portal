@@ -1,4 +1,4 @@
-# GameOps: demo and engineering review
+# GameOpen: demo and engineering review
 
 ## Five-minute demo
 

@@ -5,7 +5,7 @@ import type { Project } from '../../../../../lib/projects';
 import { ProjectForm } from '../../../../components/project-form';
 import { ProjectUnavailable } from '../../../../components/project-feedback';
 
-export const metadata = { title: 'Edit project / GameOps' };
+export const metadata = { title: 'Edit project / GameOpen' };
 export default async function EditProject({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   if (!/^[a-f0-9-]{36}$/i.test(id)) notFound();

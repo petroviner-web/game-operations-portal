@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { ProjectForm } from '../../../components/project-form';
 
-export const metadata = { title: 'New project / GameOps' };
+export const metadata = { title: 'New project / GameOpen' };
 export default function NewProjectPage() {
   return (
     <>
