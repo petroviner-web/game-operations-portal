@@ -305,6 +305,110 @@ test(
           );
         },
       );
+      await t.test(
+        'owner can grant and revoke developer access without granting ownership',
+        async () => {
+          const created = await alice.request('', 'POST', {
+            name: 'Shared project',
+            engine: 'UNREAL',
+          });
+          assert.equal(created.status, 201);
+          const shared = (await created.json()).project;
+          const projectId = shared.id;
+          assert.equal((await bob.request(`/${projectId}`)).status, 404);
+          assert.equal(
+            (await bob.request(`/${projectId}/members`, 'POST', { email: emails[0] })).status,
+            404,
+          );
+          assert.equal(
+            (await alice.request(`/${projectId}/members`, 'POST', { email: emails[1] }, false))
+              .status,
+            403,
+          );
+          assert.equal(
+            (
+              await alice.request(`/${projectId}/members`, 'POST', {
+                email: emails[1],
+                role: 'owner',
+              })
+            ).status,
+            400,
+          );
+          assert.equal(
+            (await alice.request(`/${projectId}/members`, 'POST', { email: emails[1] })).status,
+            200,
+          );
+          assert.equal(
+            (await alice.request(`/${projectId}/members`, 'POST', { email: emails[1] })).status,
+            200,
+          );
+          const members = (await (await alice.request(`/${projectId}/members`)).json()).members;
+          assert.equal(members.length, 1);
+          assert.equal(members[0].id, bob.userId);
+          assert.equal(
+            (await (await bob.request(`/${projectId}`)).json()).project.role,
+            'developer',
+          );
+          assert.ok(
+            (await (await bob.request('')).json()).items.some(
+              (p: { id: string }) => p.id === projectId,
+            ),
+          );
+          assert.equal(
+            (
+              await bob.request(`/${projectId}`, 'PATCH', {
+                name: 'Shared edit',
+                version: shared.version,
+              })
+            ).status,
+            200,
+          );
+          assert.equal(
+            (await bob.request(`/${projectId}/archive`, 'POST', { version: 2 })).status,
+            404,
+          );
+          assert.equal((await bob.request(`/${projectId}/members`)).status, 404);
+          assert.equal(
+            (
+              await bob.request(`/${projectId}/sessions`, 'POST', {
+                name: 'Playtest',
+                maxPlayers: 2,
+              })
+            ).status,
+            201,
+          );
+          assert.equal((await bob.request(`/${projectId}/sessions`)).status, 200);
+          assert.equal((await bob.request(`/${projectId}/analytics`)).status, 200);
+          assert.equal(
+            (await alice.request(`/${projectId}/members/${bob.userId}`, 'DELETE', undefined, false))
+              .status,
+            403,
+          );
+          assert.equal(
+            (await alice.request(`/${projectId}/members/${bob.userId}`, 'DELETE')).status,
+            200,
+          );
+          assert.equal((await bob.request(`/${projectId}`)).status, 404);
+          assert.equal((await bob.request(`/${projectId}/sessions`)).status, 404);
+          assert.equal((await bob.request(`/${projectId}/analytics`)).status, 404);
+        },
+      );
+      await t.test('member addition is rate limited per authenticated owner', async () => {
+        let limited = false;
+        for (let attempt = 0; attempt < 22; attempt++) {
+          const response = await alice.request(`/${id}/members`, 'POST', {
+            email: 'missing@example.test',
+          });
+          if (response.status === 429) {
+            assert.ok(response.headers.get('retry-after'));
+            limited = true;
+            break;
+          }
+          assert.equal(response.status, 200);
+        }
+        assert.equal(limited, true);
+        assert.equal((await alice.request(`/${id}`)).status, 200);
+      });
     } finally {
       await app?.close();
       try {

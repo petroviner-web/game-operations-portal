@@ -285,6 +285,55 @@ body {
   background: #303034;
   border-style: solid;
 }
+.project-members {
+  margin: 24px 0;
+  padding: 28px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.project-members > p:not(.eyebrow) {
+  color: var(--muted);
+}
+.members-form label {
+  display: block;
+  margin: 18px 0 8px;
+}
+.members-form > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.members-form input {
+  min-width: 0;
+  flex: 1 1 220px;
+  min-height: 46px;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 10px 12px;
+  font: inherit;
+}
+.members-list {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0;
+}
+.members-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 12px 0;
+  border-top: 1px solid var(--border);
+  overflow-wrap: anywhere;
+}
+.members-list small {
+  color: var(--muted);
+  display: block;
+}
 @media (max-width: 900px) {
   .workspace-page {
     grid-template-columns: 185px minmax(0, 1fr);

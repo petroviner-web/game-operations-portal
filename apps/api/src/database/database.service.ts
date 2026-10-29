@@ -3,7 +3,7 @@ import { Pool, PoolClient, QueryResultRow } from 'pg';
 import { readConfig } from '../config';
 
 export const INITIAL_MIGRATION = '001_users.sql';
-export const REQUIRED_MIGRATION = '004_game_sessions.sql';
+export const REQUIRED_MIGRATION = '005_project_members.sql';
 
 @Injectable()
 export class DatabaseService implements OnModuleDestroy {
@@ -26,7 +26,7 @@ export class DatabaseService implements OnModuleDestroy {
   async isReady(): Promise<boolean> {
     try {
       const result = await this.pool.query<{ ready: boolean }>(
-        "SELECT EXISTS (SELECT 1 FROM schema_migrations WHERE name = $1) AND to_regclass('public.users') IS NOT NULL AND to_regclass('public.auth_sessions') IS NOT NULL AND to_regclass('public.auth_rate_limits') IS NOT NULL AND to_regclass('public.projects') IS NOT NULL AND to_regclass('public.game_sessions') IS NOT NULL AND to_regclass('public.session_participants') IS NOT NULL AS ready",
+        "SELECT EXISTS (SELECT 1 FROM schema_migrations WHERE name = $1) AND to_regclass('public.users') IS NOT NULL AND to_regclass('public.auth_sessions') IS NOT NULL AND to_regclass('public.auth_rate_limits') IS NOT NULL AND to_regclass('public.projects') IS NOT NULL AND to_regclass('public.project_members') IS NOT NULL AND to_regclass('public.game_sessions') IS NOT NULL AND to_regclass('public.session_participants') IS NOT NULL AS ready",
         [REQUIRED_MIGRATION],
       );
       return result.rows[0]?.ready === true;

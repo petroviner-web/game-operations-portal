@@ -119,7 +119,8 @@ export default async function WorkspacePage({
                 <div className="project-card-top">
                   <span className="engine-label">{engines[project.engine]}</span>
                   <span className={`project-state ${project.state}`}>
-                    {project.state === 'active' ? 'Active' : 'Archived'}
+                    {project.state === 'active' ? 'Active' : 'Archived'} ·{' '}
+                    {project.role === 'owner' ? 'Owner' : 'Developer'}
                   </span>
                 </div>
                 <h2>

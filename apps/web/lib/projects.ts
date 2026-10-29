@@ -10,6 +10,7 @@ export interface Project {
   description: string;
   engine: keyof typeof engines;
   state: 'active' | 'archived';
+  role: 'owner' | 'developer';
   version: number;
   createdAt: string;
   updatedAt: string;

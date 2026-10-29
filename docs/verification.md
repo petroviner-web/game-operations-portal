@@ -1,3 +1,7 @@
+# Project developer access — local verification
+
+Added migration `005_project_members.sql`, owner-only member management, per-project developer access and a member management interface. Existing ownership stays in `projects.owner_id`. Locally, 43 PostgreSQL integration checks passed, including grant/revoke, CSRF, role injection, project/session/analytics permissions and the per-owner rate limit. The desktop and mobile member-management browser flows passed (2 tests). An initial browser assertion used exact text that included a nested role label; the selector was corrected to target the actual remove button. TypeScript and production build passed. Public deployment and backup/restore are separate checks and are not implied by these local results.
+
 # Final MVP slice — 28 October 2026
 
 Added request completion telemetry, production JSON logs, finished-MVP landing copy and direct registration links, operations/rollback notes and the interview demo/review guide. No schema or hosting-plan change.

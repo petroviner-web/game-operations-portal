@@ -4,6 +4,7 @@ import { serverApi } from '../../../../lib/server-api';
 import { engines, formatProjectDate, type Project } from '../../../../lib/projects';
 import { ProjectUnavailable } from '../../../components/project-feedback';
 import { ProjectLifecycle } from '../../../components/project-lifecycle';
+import { ProjectMembers, type Member } from '../../../components/project-members';
 
 export const metadata = { title: 'Project details / GameOpen' };
 export default async function ProjectDetail({ params }: { params: Promise<{ id: string }> }) {
@@ -13,6 +14,13 @@ export default async function ProjectDetail({ params }: { params: Promise<{ id: 
   if (response?.status === 404 || response?.status === 400) notFound();
   if (!response?.ok) return <ProjectUnavailable retry={`/workspace/projects/${id}`} />;
   const { project } = (await response.json()) as { project: Project };
+  const membersResponse =
+    project.role === 'owner'
+      ? await serverApi(`/projects/${encodeURIComponent(id)}/members`)
+      : null;
+  const members = membersResponse?.ok
+    ? ((await membersResponse.json()) as { members: Member[] }).members
+    : null;
   return (
     <>
       <Link
@@ -33,6 +41,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ id: 
           <span className={`project-state ${project.state}`}>
             {project.state === 'active' ? 'Active' : 'Archived'}
           </span>
+          <span className="project-state">{project.role === 'owner' ? 'Owner' : 'Developer'}</span>
           {project.state === 'active' && (
             <Link className="primary-button" href={`/workspace/projects/${id}/edit`}>
               Edit project <span aria-hidden="true">↗</span>
@@ -92,7 +101,14 @@ export default async function ProjectDetail({ params }: { params: Promise<{ id: 
           View analytics <span aria-hidden="true">↗</span>
         </Link>
       </section>
-      <ProjectLifecycle project={project} />
+      {project.role === 'owner' && (
+        <ProjectMembers
+          projectId={id}
+          initialMembers={members}
+          archived={project.state === 'archived'}
+        />
+      )}
+      {project.role === 'owner' && <ProjectLifecycle project={project} />}
     </>
   );
 }

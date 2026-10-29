@@ -10,6 +10,9 @@ const fields = {
   description: z.string().max(2000, 'Use no more than 2,000 characters.'),
   engine: z.enum(['UNREAL', 'UNITY', 'GODOT', 'CUSTOM']),
 };
+export const addMemberSchema = z
+  .object({ email: z.string().trim().toLowerCase().max(254).email() })
+  .strict();
 export const createProjectSchema = z
   .object({ ...fields, description: fields.description.default('') })
   .strict();

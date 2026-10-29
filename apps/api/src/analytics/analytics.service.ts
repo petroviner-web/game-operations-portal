@@ -23,7 +23,7 @@ export class AnalyticsService {
     const result = await this.db.query<{ analytics: ProjectAnalytics }>(
       `
       WITH project AS (
-        SELECT id, name, archived_at FROM projects WHERE owner_id=$1 AND id=$2
+        SELECT id, name, archived_at FROM projects p WHERE id=$2 AND (owner_id=$1 OR EXISTS (SELECT 1 FROM project_members m WHERE m.project_id=p.id AND m.user_id=$1))
       ), sessions AS (
         SELECT s.* FROM game_sessions s JOIN project p ON p.id=s.project_id
       ), bounds AS (

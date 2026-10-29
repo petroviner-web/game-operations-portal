@@ -53,10 +53,15 @@ export class SessionsService {
   private async lockProject(client: PoolClient, owner: string, project: string) {
     // Shared project lock first, session lock second. Archive takes an exclusive project lock.
     const result = await client.query<{ archived_at: Date | null }>(
-      'SELECT archived_at FROM projects WHERE owner_id=$1 AND id=$2 FOR SHARE',
-      [owner, project],
+      'SELECT archived_at FROM projects WHERE id=$1 FOR SHARE',
+      [project],
     );
     if (!result.rows[0]) missing();
+    const access = await client.query(
+      'SELECT 1 FROM projects p WHERE p.id=$2 AND (p.owner_id=$1 OR EXISTS (SELECT 1 FROM project_members m WHERE m.project_id=p.id AND m.user_id=$1))',
+      [owner, project],
+    );
+    if (!access.rowCount) missing();
     return result.rows[0];
   }
   private async snapshot(client: PoolClient, project: string, id: string) {
@@ -79,14 +84,14 @@ export class SessionsService {
     });
   }
   async list(owner: string, project: string, input: ListSessions) {
-    const parent = await this.db.query('SELECT 1 FROM projects WHERE owner_id=$1 AND id=$2', [
-      owner,
-      project,
-    ]);
+    const parent = await this.db.query(
+      'SELECT 1 FROM projects p WHERE (p.owner_id=$1 OR EXISTS (SELECT 1 FROM project_members m WHERE m.project_id=p.id AND m.user_id=$1)) AND p.id=$2',
+      [owner, project],
+    );
     if (!parent.rowCount) missing();
     if (input.cursor) {
       const cursor = await this.db.query(
-        'SELECT 1 FROM game_sessions s JOIN projects p ON p.id=s.project_id WHERE p.owner_id=$1 AND p.id=$2 AND s.id=$3',
+        'SELECT 1 FROM game_sessions s JOIN projects p ON p.id=s.project_id WHERE (p.owner_id=$1 OR EXISTS (SELECT 1 FROM project_members m WHERE m.project_id=p.id AND m.user_id=$1)) AND p.id=$2 AND s.id=$3',
         [owner, project, input.cursor],
       );
       if (!cursor.rowCount)
@@ -97,7 +102,7 @@ export class SessionsService {
     }
     const result = await this.db.query<SessionRow>(
       `SELECT s.*, ${activeCount} FROM game_sessions s JOIN projects p ON p.id=s.project_id
-      WHERE p.owner_id=$1 AND p.id=$2 AND ($3::uuid IS NULL OR (s.created_at,s.id)<
+      WHERE (p.owner_id=$1 OR EXISTS (SELECT 1 FROM project_members m WHERE m.project_id=p.id AND m.user_id=$1)) AND p.id=$2 AND ($3::uuid IS NULL OR (s.created_at,s.id)<
         (SELECT c.created_at,c.id FROM game_sessions c WHERE c.project_id=$2 AND c.id=$3))
       ORDER BY s.created_at DESC,s.id DESC LIMIT $4`,
       [owner, project, input.cursor ?? null, input.limit + 1],
@@ -112,7 +117,7 @@ export class SessionsService {
     // One SQL statement gives state and roster from the same database snapshot.
     const result = await this.db.query<SessionRow>(
       `SELECT s.*, ${activeCount}, ${activeRoster} FROM game_sessions s JOIN projects p ON p.id=s.project_id
-      WHERE p.owner_id=$1 AND p.id=$2 AND s.id=$3`,
+      WHERE (p.owner_id=$1 OR EXISTS (SELECT 1 FROM project_members m WHERE m.project_id=p.id AND m.user_id=$1)) AND p.id=$2 AND s.id=$3`,
       [owner, project, id],
     );
     return view(result.rows[0] ?? missing());

@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   Param,
@@ -9,11 +10,14 @@ import {
   Post,
   Query,
   Req,
+  UseGuards,
 } from '@nestjs/common';
+import { MemberRateLimitGuard } from './member-rate-limit.guard';
 import { AuthRequest } from '../auth/auth.types';
 import { ProjectsService } from './projects.service';
 import {
   createProjectSchema,
+  addMemberSchema,
   listProjectsSchema,
   parseProjectInput,
   updateProjectSchema,
@@ -40,6 +44,32 @@ export class ProjectsController {
   @Get(':id')
   async get(@Req() request: AuthRequest, @Param('id', new ParseUUIDPipe()) id: string) {
     return { project: await this.projects.get(request.user!.id, id) };
+  }
+  @Get(':id/members')
+  async members(@Req() request: AuthRequest, @Param('id', new ParseUUIDPipe()) id: string) {
+    return { members: await this.projects.members(request.user!.id, id) };
+  }
+  @Post(':id/members')
+  @HttpCode(200)
+  @UseGuards(MemberRateLimitGuard)
+  addMember(
+    @Req() request: AuthRequest,
+    @Param('id', new ParseUUIDPipe()) id: string,
+    @Body() body: unknown,
+  ) {
+    return this.projects.addMember(
+      request.user!.id,
+      id,
+      parseProjectInput(addMemberSchema, body).email,
+    );
+  }
+  @Delete(':id/members/:userId')
+  removeMember(
+    @Req() request: AuthRequest,
+    @Param('id', new ParseUUIDPipe()) id: string,
+    @Param('userId', new ParseUUIDPipe()) userId: string,
+  ) {
+    return this.projects.removeMember(request.user!.id, id, userId);
   }
   @Patch(':id')
   async update(
