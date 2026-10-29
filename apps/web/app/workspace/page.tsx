@@ -28,9 +28,9 @@ export default async function WorkspacePage({
     <>
       <div className="workspace-title">
         <div>
-          <p className="eyebrow">FROM IDEA TO PLAY</p>
+          <p className="eyebrow">YOUR LIBRARY / PROJECTS</p>
           <h1>
-            Your game projects<span>.</span>
+            Your projects<span>.</span>
           </h1>
           <p className="intro">A home for the worlds you’re building.</p>
         </div>
@@ -104,6 +104,18 @@ export default async function WorkspacePage({
           <div className="project-grid">
             {page.items.map((project) => (
               <article className="project-card" key={project.id}>
+                <div
+                  className={`project-cover cover-${project.engine.toLowerCase()}`}
+                  aria-hidden="true"
+                >
+                  <span className="cover-orbit" />
+                  <span className="cover-engine">{engines[project.engine]}</span>
+                  <span className="cover-label">
+                    GAMEOPS
+                    <br />
+                    PROJECT LIBRARY
+                  </span>
+                </div>
                 <div className="project-card-top">
                   <span className="engine-label">{engines[project.engine]}</span>
                   <span className={`project-state ${project.state}`}>

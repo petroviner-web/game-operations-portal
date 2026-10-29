@@ -4,6 +4,7 @@ import './auth.css';
 import './projects.css';
 import './sessions.css';
 import './analytics.css';
+import './launcher.css';
 
 export const metadata: Metadata = {
   title: 'GameOps / Developer console',

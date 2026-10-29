@@ -1,0 +1,348 @@
+/* A launcher-inspired visual layer shared by the existing portal screens. */
+:root {
+  --bg: #252528;
+  --panel: #303034;
+  --raised: #3b3b41;
+  --border: #4b4b51;
+  --text: #f4f4f5;
+  --muted: #bdbdc4;
+  --green: #8bc7ff;
+  --amber: #f2cb8a;
+  --sidebar: #202024;
+}
+body {
+  background: #252528;
+}
+.sidebar,
+.workspace-header {
+  background: #202024;
+}
+.sidebar nav a.nav-active {
+  background: #343439;
+}
+.topbar {
+  background: #29292d;
+}
+.brand-mark {
+  border-radius: 9px;
+  color: #d5ebff;
+  border-color: #69a9ed;
+  background: #31577c;
+}
+.brand-slash {
+  color: #8bc7ff;
+}
+.health-panel,
+.roadmap-card,
+.project-form {
+  border-radius: 12px;
+}
+.health-panel {
+  background: #303034;
+}
+.connection-card {
+  background: #ededf0;
+  color: #242428;
+}
+.connection-card .small-label,
+.connection-card small,
+.connection-card .connection-note {
+  color: #55565e;
+}
+.connection-card .connector span {
+  color: #55565e;
+}
+.connection-card .node-square {
+  color: #25384b;
+  background: #d4e5f5;
+  border-color: #a0bfdc;
+}
+.roadmap-card.current {
+  background: #343f4b;
+  border-color: #6687a4;
+}
+.auth-story {
+  background: linear-gradient(145deg, #343f50, #202229);
+}
+.orbit-ring,
+.orbit-ring::before {
+  border-color: #6e8fac;
+}
+.orbit-center {
+  color: #b0d7ff;
+  border-color: #7099c0;
+  background: #344a60;
+}
+.primary-button:hover,
+.health-actions button:hover {
+  background: #b5dcff;
+}
+.workspace-page {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 230px minmax(0, 1fr);
+}
+.workspace-header {
+  min-height: 100vh;
+  padding: 30px 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 0;
+  border-right: 1px solid #37373c;
+  border-bottom: 0;
+}
+.workspace-header .brand {
+  margin-bottom: 36px;
+}
+.workspace-profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #3a3a40;
+}
+.workspace-profile-avatar {
+  flex: none;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(140deg, #8fcaf8, #4c6b9a);
+  color: #132a41;
+  font-weight: 700;
+}
+.workspace-profile strong,
+.workspace-profile small {
+  display: block;
+  overflow-wrap: anywhere;
+}
+.workspace-profile strong {
+  font-size: 13px;
+}
+.workspace-profile small {
+  color: var(--muted);
+  font-size: 11px;
+}
+.workspace-nav {
+  display: grid;
+  gap: 4px;
+  margin: 26px 0;
+}
+.workspace-nav > span {
+  margin: 16px 8px 6px;
+  color: #96969f;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+}
+.workspace-nav a {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  min-height: 45px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  color: #d1d1d5;
+  font-size: 14px;
+}
+.workspace-nav a:hover,
+.workspace-nav a:focus-visible {
+  background: #35353a;
+  color: white;
+}
+.workspace-nav a span {
+  width: 20px;
+  text-align: center;
+  color: #a2a2a9;
+  font-size: 17px;
+}
+.workspace-header-actions {
+  margin-top: auto;
+  padding-top: 20px;
+  border-top: 1px solid #3a3a40;
+}
+.workspace-main {
+  width: 100%;
+  max-width: 1500px;
+  min-width: 0;
+  margin: 0 auto;
+  padding: 34px 46px;
+}
+.workspace-account {
+  min-height: 48px;
+  padding: 0 20px;
+  margin-bottom: 42px;
+  border-radius: 30px;
+  background: #202024;
+}
+.workspace-account .eyebrow {
+  color: #e9e9eb;
+  letter-spacing: 1px;
+}
+.workspace-title {
+  margin-bottom: 27px;
+}
+.workspace-title h1 {
+  font-weight: 650;
+  letter-spacing: -1px;
+}
+.project-tabs {
+  margin-bottom: 22px;
+}
+.project-grid {
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+.project-card {
+  padding: 0;
+  overflow: hidden;
+  border-radius: 5px;
+  background: #38383d;
+}
+.project-cover {
+  height: 215px;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  padding: 19px;
+  background: linear-gradient(145deg, #1c3447 0%, #456c85 53%, #384d6a 100%);
+}
+.cover-unreal {
+  background: linear-gradient(145deg, #16252e, #405b70 52%, #4b6380);
+}
+.cover-unity {
+  background: linear-gradient(145deg, #1f2736, #6a536e 58%, #4d3b70);
+}
+.cover-other {
+  background: linear-gradient(145deg, #212d31, #547a76 55%, #3b5b60);
+}
+.cover-orbit {
+  position: absolute;
+  width: 190px;
+  height: 190px;
+  left: 50%;
+  top: 45%;
+  border: 1px solid #ffffff38;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) rotate(-28deg) scaleY(0.68);
+  box-shadow:
+    0 0 0 24px #ffffff0a,
+    0 0 0 48px #ffffff08,
+    0 0 0 72px #ffffff06;
+}
+.cover-orbit::after {
+  content: '';
+  position: absolute;
+  inset: 35px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 28%, #c1e4ff, #7195ba 32%, #263951 75%);
+  box-shadow: 0 12px 35px #0006;
+}
+.cover-engine,
+.cover-label {
+  position: absolute;
+  z-index: 1;
+  color: #fff;
+  text-shadow: 0 1px 4px #0009;
+}
+.cover-engine {
+  top: 16px;
+  left: 18px;
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.cover-label {
+  bottom: 16px;
+  left: 18px;
+  font-size: 10px;
+  line-height: 1.4;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+}
+.project-card-top {
+  padding: 18px 18px 0;
+}
+.project-card h2 {
+  margin: 18px 18px 8px;
+  font-size: 20px;
+}
+.project-card-description {
+  margin: 0 18px 24px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.project-card-footer {
+  margin: auto 18px 0;
+  padding: 14px 0 18px;
+}
+.project-empty {
+  background: #303034;
+  border-style: solid;
+}
+@media (max-width: 900px) {
+  .workspace-page {
+    grid-template-columns: 185px minmax(0, 1fr);
+  }
+  .workspace-header {
+    padding: 24px 15px;
+  }
+  .workspace-main {
+    padding: 28px;
+  }
+}
+@media (max-width: 720px) {
+  .workspace-page {
+    display: block;
+  }
+  .workspace-header {
+    min-height: 0;
+    padding: 15px 20px;
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .workspace-header .brand {
+    margin: 0 0 12px;
+  }
+  .workspace-profile {
+    padding: 0;
+    border: 0;
+  }
+  .workspace-nav {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 12px 0 0;
+    gap: 4px;
+  }
+  .workspace-nav > span {
+    display: none;
+  }
+  .workspace-nav a {
+    padding: 6px 9px;
+    font-size: 12px;
+  }
+  .workspace-header-actions {
+    margin-top: 4px;
+    padding-top: 8px;
+  }
+  .workspace-main {
+    padding: 24px 20px;
+  }
+  .workspace-account {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 27px;
+    padding: 8px 14px;
+  }
+  .project-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  }
+  .project-card {
+    padding: 0;
+  }
+}
