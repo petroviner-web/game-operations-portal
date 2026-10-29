@@ -5,9 +5,7 @@ export function AuthShell({ children }: { children: React.ReactNode }) {
     <main className="auth-shell">
       <aside className="auth-story">
         <Link className="brand" href="/" aria-label="GameOps home">
-          <span className="brand-mark" aria-hidden="true">
-            G<span>·</span>
-          </span>
+          <span className="brand-mark" aria-hidden="true" />
           GameOps<span className="brand-slash">/</span>
         </Link>
         <div className="auth-story-body">

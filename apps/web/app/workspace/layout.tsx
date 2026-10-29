@@ -20,9 +20,7 @@ export default async function WorkspaceLayout({ children }: { children: React.Re
       </a>
       <aside className="workspace-header" aria-label="Workspace navigation">
         <Link className="brand" href="/workspace">
-          <span className="brand-mark" aria-hidden="true">
-            G<span>·</span>
-          </span>
+          <span className="brand-mark" aria-hidden="true" />
           GameOps<span className="brand-slash">/</span>
         </Link>
         <div className="workspace-profile">

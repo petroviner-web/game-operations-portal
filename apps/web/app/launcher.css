@@ -24,10 +24,10 @@ body {
   background: #29292d;
 }
 .brand-mark {
-  border-radius: 9px;
-  color: #d5ebff;
-  border-color: #69a9ed;
-  background: #31577c;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  background: url('/gameops-mark.webp') center / contain no-repeat;
 }
 .brand-slash {
   color: #8bc7ff;

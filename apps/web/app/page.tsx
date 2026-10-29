@@ -43,9 +43,7 @@ export default function Home() {
       </a>
       <aside className="sidebar" aria-label="Workspace navigation">
         <Link className="brand" href="/" aria-label="GameOps home">
-          <span className="brand-mark" aria-hidden="true">
-            G<span>·</span>
-          </span>
+          <span className="brand-mark" aria-hidden="true" />
           GameOps<span className="brand-slash">/</span>
         </Link>
         <div className="workspace-label">DEVELOPER WORKSPACE</div>
