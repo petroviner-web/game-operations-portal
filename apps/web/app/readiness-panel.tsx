@@ -166,7 +166,11 @@ export function ReadinessPanel() {
         <div className="small-label">THE CONNECTION PATH</div>
         <div className="connection-flow">
           <div>
-            <span className="node-square">W</span>
+            <span className="node-square" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M3 4h18v13H3zM8 21h8m-4-4v4" />
+              </svg>
+            </span>
             <span>
               Web client<small>Your browser</small>
             </span>
@@ -175,7 +179,12 @@ export function ReadinessPanel() {
             <span>HTTP / SAME ORIGIN</span>
           </div>
           <div>
-            <span className="node-square">A</span>
+            <span className="node-square" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="m8 3 1 3h6l1-3m-8 18 1-3h6l1 3M3 8l3 1v6l-3 1m18-8-3 1v6l3 1M6 6h12v12H6z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+            </span>
             <span>
               Application API<small>Business logic lives here</small>
             </span>
@@ -184,7 +193,12 @@ export function ReadinessPanel() {
             <span>SQL / CONNECTION POOL</span>
           </div>
           <div>
-            <span className="node-square">D</span>
+            <span className="node-square" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <ellipse cx="12" cy="5" rx="8" ry="3" />
+                <path d="M4 5v14c0 4 16 4 16 0V5M4 12c0 4 16 4 16 0" />
+              </svg>
+            </span>
             <span>
               PostgreSQL<small>Persistent application data</small>
             </span>
