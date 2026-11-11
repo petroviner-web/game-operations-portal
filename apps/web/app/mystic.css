@@ -1,0 +1,919 @@
+/* GameOpen: charcoal stone, aged bronze and restrained blue light.
+   Shared presentation only; existing layouts, data and interactions are retained. */
+:root {
+  --bg: #0c1216;
+  --panel: #141d22;
+  --raised: #202e36;
+  --border: #4a443a;
+  --text: #eee9df;
+  --muted: #b4bec3;
+  --accent: #8bd3ef;
+  --green: var(--accent);
+  --amber: #e4b77c;
+  --bronze: #ad8756;
+  --bronze-light: #d8b987;
+  --sidebar: #0b1013;
+  --display: Georgia, 'Times New Roman', serif;
+  --stone: url('/stone-grain.svg');
+}
+body {
+  background:
+    var(--stone), radial-gradient(ellipse at 75% 10%, #1a2d37, transparent 65%), var(--bg);
+}
+::selection {
+  background: #36657b;
+  color: #fff;
+}
+h1,
+h2,
+.brand,
+.roadmap-card h3 {
+  font-family: var(--display);
+}
+h1 {
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+h2 {
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+h1 > span {
+  color: var(--accent);
+  text-shadow: 0 0 14px #57caff99;
+}
+.brand {
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.8px;
+  gap: 11px;
+}
+.brand-mark {
+  width: 46px;
+  height: 46px;
+  flex: none;
+  filter: drop-shadow(0 2px 5px #000);
+}
+.brand-slash {
+  color: var(--accent);
+}
+.eyebrow,
+.small-label,
+.workspace-label {
+  color: var(--bronze-light);
+  letter-spacing: 0.2em;
+  font-size: 11px;
+}
+.sidebar,
+.workspace-header {
+  background:
+    linear-gradient(#0c1216 0, #0c1216e8 420px, #0c121610 660px),
+    url('/sanctum.webp') center 360px / 100% auto no-repeat,
+    var(--sidebar);
+  border-right: 1px solid var(--bronze);
+  box-shadow:
+    inset -5px 0 0 #090e11,
+    inset -6px 0 0 #65503955,
+    6px 0 24px #0005;
+}
+.sidebar {
+  width: clamp(240px, 19vw, 300px);
+  padding: 26px 25px;
+}
+.sidebar .brand {
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--bronze);
+}
+.workspace-label {
+  margin: 30px 12px 20px;
+  padding-bottom: 17px;
+  border-bottom: 1px solid #ad87564d;
+  font-size: 10px;
+}
+.sidebar nav {
+  gap: 12px;
+}
+.sidebar nav a {
+  min-height: 52px;
+  font-size: 16px;
+  border: 1px solid transparent;
+  border-radius: 0;
+  color: #d8d9d5;
+}
+.sidebar nav a > span:first-child {
+  color: #c2ad8f;
+}
+.sidebar nav a.nav-active,
+.workspace-nav a[aria-current='page'] {
+  color: #e9f6ff;
+  background: linear-gradient(110deg, #153b50, #123045b8 65%, #0e202d);
+  border: 1px solid var(--bronze);
+  box-shadow:
+    inset 0 0 0 3px #0a151b,
+    inset 0 0 0 4px #8b76575c,
+    0 0 18px #54b4ec12;
+}
+.sidebar nav a.nav-active > span {
+  color: var(--accent);
+}
+.sidebar nav a:hover,
+.workspace-nav a:hover {
+  background-color: #24353e;
+  color: #fff;
+}
+.sidebar-note {
+  margin-top: 410px;
+  padding: 22px 12px;
+  background: #0c1216d9;
+  border-top: 1px solid #ad875655;
+}
+.sidebar-note p {
+  font-family: var(--display);
+  font-size: 20px;
+}
+.step-track i {
+  background: #7cacc0;
+}
+.sidebar-footer {
+  border-color: #ad87564d;
+}
+.avatar {
+  border: 1px solid var(--bronze);
+  border-radius: 4px;
+  color: var(--accent);
+}
+.topbar {
+  height: 84px;
+  padding: 0 38px;
+  border-bottom: 1px solid var(--bronze);
+  background: var(--stone), linear-gradient(#12191e, #0c1216);
+  box-shadow:
+    0 3px 0 #080d10,
+    0 4px 0 #6f583744;
+  font-size: 14px;
+}
+.breadcrumb-separator {
+  color: var(--bronze);
+}
+.environment {
+  min-height: 44px;
+  padding: 8px 20px;
+  font:
+    14px 'Segoe UI',
+    sans-serif;
+  color: var(--text);
+  border: 1px solid var(--bronze);
+  border-radius: 2px;
+  box-shadow:
+    inset 0 0 0 3px #10171c,
+    inset 0 0 0 4px #ad875642;
+  background: linear-gradient(#25313a80, #10171c);
+}
+.environment > span {
+  color: var(--accent);
+  font-size: 23px;
+}
+.environment:hover {
+  background-color: var(--raised);
+  border-color: var(--bronze-light);
+}
+.shell .content {
+  background:
+    linear-gradient(90deg, #0c12164d, transparent),
+    linear-gradient(0deg, var(--bg), transparent 25%), url('/world-gate.webp');
+  background-position: 0 84px;
+  background-size: 100% 380px;
+  background-repeat: no-repeat;
+}
+.shell main {
+  padding: 42px 30px 28px;
+}
+.page-heading {
+  padding: 0 12px;
+  margin-bottom: 24px;
+  min-height: 166px;
+}
+.page-heading .eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 24px;
+}
+.page-heading .eyebrow::after {
+  content: '';
+  height: 1px;
+  width: 100px;
+  background: linear-gradient(90deg, var(--bronze), transparent);
+}
+.page-heading h1 {
+  font-size: clamp(35px, 3.5vw, 58px);
+  font-variant-caps: small-caps;
+  text-shadow:
+    0 2px 2px #000,
+    0 4px 18px #000;
+}
+.intro {
+  font-size: 16px;
+  line-height: 1.7;
+  max-width: 760px;
+}
+.page-heading .intro {
+  color: #ccd3d7;
+  text-shadow: 0 2px 8px #000;
+}
+.version {
+  color: #d5dce0;
+  border-color: var(--bronze);
+  font-size: 11px;
+}
+.onboarding-links {
+  padding: 0 12px;
+  margin-bottom: 30px;
+}
+.onboarding-links a {
+  color: var(--accent);
+  text-decoration-color: #5da2bf80;
+}
+.health-panel {
+  border: 0;
+  border-radius: 0;
+  background: none;
+  grid-template-columns: minmax(0, 1.5fr) minmax(285px, 1fr);
+  gap: 22px;
+  overflow: visible;
+}
+.health-main,
+.connection-card {
+  position: relative;
+  border: 1px solid var(--bronze);
+  border-radius: 2px;
+  padding: 28px 30px;
+  background: var(--stone), linear-gradient(135deg, #1a242bef, #10171bfa);
+  box-shadow:
+    inset 0 0 0 5px #090f12,
+    inset 0 0 0 6px #7f674c88,
+    0 10px 24px #0006;
+}
+.health-main::before,
+.connection-card::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  pointer-events: none;
+  background:
+    linear-gradient(135deg, transparent 38%, var(--bronze-light) 40%, #69533b 47%, transparent 50%)
+      top left,
+    linear-gradient(225deg, transparent 38%, var(--bronze-light) 40%, #69533b 47%, transparent 50%)
+      top right,
+    linear-gradient(45deg, transparent 38%, #a58960 40%, #69533b 47%, transparent 50%) bottom left,
+    linear-gradient(315deg, transparent 38%, #a58960 40%, #69533b 47%, transparent 50%) bottom right;
+  background-repeat: no-repeat;
+  background-size: 25px 25px;
+}
+.health-kicker {
+  min-height: 35px;
+  padding-bottom: 18px;
+  margin-bottom: 21px;
+  border-bottom: 1px solid #ad875638;
+  font-size: 11px;
+  color: #ddd9cf;
+  letter-spacing: 0.17em;
+}
+.status-dot {
+  flex: none;
+}
+.status-dot.green {
+  background: #8de5ff;
+  box-shadow:
+    0 0 5px 2px #5bb9e7,
+    0 0 14px #57cefc70;
+}
+.live-tag {
+  padding: 6px 9px;
+  border-color: var(--bronze);
+  color: #e4e2db;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+}
+.health-main h2 {
+  font-size: clamp(26px, 2.5vw, 40px);
+}
+.health-description {
+  font-size: 15px;
+  min-height: 60px;
+  max-width: none;
+  margin: 14px 0 26px;
+}
+.service-list {
+  position: relative;
+  border-top: 1px solid #ad875680;
+  padding-top: 6px;
+}
+.service-list::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  width: 7px;
+  height: 7px;
+  transform: rotate(45deg);
+  border: 1px solid var(--bronze-light);
+  background: var(--panel);
+}
+.service-row {
+  min-height: 64px;
+  font-size: 15px;
+  border-color: #66716d45;
+}
+.service-icon {
+  color: var(--amber);
+  font-size: 12px;
+}
+.service-row strong {
+  font: 18px var(--display);
+}
+.service-tech {
+  color: var(--muted);
+  font-size: 11px;
+  border-color: #66716d75;
+  padding: 2px 6px;
+}
+.service-state {
+  border: 1px solid #756245;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 11px;
+  background: #201c15;
+}
+.service-state.good {
+  color: var(--accent);
+  border-color: #46606a;
+  background: #15252c;
+}
+.service-state.good::before {
+  content: '';
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  margin-right: 7px;
+  border-radius: 50%;
+  background: #8be1da;
+  box-shadow: 0 0 7px #8be1da;
+}
+.health-actions {
+  margin-top: 22px;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.health-actions button,
+.primary-button {
+  border: 1px solid #b69a6b;
+  border-radius: 2px;
+  background: linear-gradient(#284c60, #173448);
+  color: #e5f4fb;
+  box-shadow: inset 0 0 0 3px #0b202850;
+}
+.health-actions button:hover,
+.primary-button:hover {
+  background: linear-gradient(#365e73, #214457);
+  border-color: #e1c393;
+}
+.health-actions button {
+  font-size: 13px;
+}
+.last-checked {
+  font-size: 11px;
+}
+.connection-card {
+  color: var(--text);
+  background:
+    var(--stone), radial-gradient(ellipse at 100% 40%, #4b443250, transparent 80%),
+    linear-gradient(135deg, #262a29, #171e22);
+}
+.connection-card > .small-label {
+  color: var(--bronze-light);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  padding-bottom: 18px;
+  border-bottom: 1px solid #ad87564d;
+}
+.connection-flow {
+  margin-top: 28px;
+}
+.connection-flow > div:not(.connector) {
+  gap: 18px;
+  font: 23px var(--display);
+}
+.connection-card .node-square {
+  flex: none;
+  width: 54px;
+  height: 62px;
+  color: var(--accent);
+  background: linear-gradient(135deg, #2d4755, #101d25);
+  border: 1px solid var(--bronze-light);
+  border-radius: 12px 3px;
+  box-shadow:
+    inset 0 0 0 4px #101b22,
+    inset 0 0 0 5px #688b9d70,
+    0 0 12px #64bde416;
+}
+.node-square svg {
+  width: 27px;
+  height: 27px;
+}
+.connection-card small {
+  color: #c2c9cb;
+  font:
+    13px/1.6 'Segoe UI',
+    sans-serif;
+  margin-top: 3px;
+}
+.connection-card .connector {
+  height: 60px;
+  margin-left: 27px;
+  border-left: 1px solid #79c9ec;
+  position: relative;
+}
+.connector::before,
+.connector::after {
+  content: '';
+  position: absolute;
+  left: -3px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #99e1fb;
+  box-shadow: 0 0 9px #56c5fa;
+}
+.connector::before {
+  top: 0;
+}
+.connector::after {
+  bottom: 0;
+}
+.connection-card .connector span {
+  color: #d7d3cb;
+  border: 1px solid #ad875677;
+  padding: 5px 9px;
+  font-size: 9px;
+  letter-spacing: 0.13em;
+  margin-left: 44px;
+}
+.connection-card .connection-note {
+  border-color: #ad87564d;
+  color: var(--muted);
+  font-size: 12px;
+}
+.roadmap-section {
+  margin-top: 48px;
+}
+.section-heading h2 {
+  font-size: 29px;
+}
+.roadmap-card {
+  background: var(--stone), linear-gradient(135deg, #19232a, #11191e);
+  border-color: #8b704e88;
+  border-radius: 2px;
+  padding: 23px;
+}
+.roadmap-card h3 {
+  font-size: 22px;
+}
+.roadmap-card p {
+  font-size: 13px;
+}
+.phase,
+.section-caption,
+.step-number {
+  font-size: 11px;
+}
+.step-number {
+  color: var(--bronze-light);
+}
+.main-footer {
+  color: #9eacb4;
+  font-size: 10px;
+  border-color: #ad87564d;
+}
+/* The same material language on every authenticated screen. */
+.workspace-page {
+  grid-template-columns: 252px minmax(0, 1fr);
+}
+.workspace-header {
+  padding: 28px 22px;
+}
+.workspace-header .brand {
+  font-size: 26px;
+  padding-bottom: 22px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--bronze);
+}
+.workspace-profile,
+.workspace-header-actions {
+  border-color: #ad87564d;
+}
+.workspace-profile-avatar {
+  border: 1px solid var(--bronze);
+  border-radius: 4px;
+  color: var(--accent);
+  background: linear-gradient(135deg, #2c4351, #15222b);
+}
+.workspace-nav > span {
+  color: var(--bronze-light);
+}
+.workspace-nav a {
+  color: #d7dcd9;
+  border-radius: 2px;
+  border: 1px solid transparent;
+}
+.workspace-nav a span {
+  color: var(--accent);
+}
+.workspace-main {
+  padding: 30px 38px;
+  background:
+    linear-gradient(#0c12164d, var(--bg) 330px),
+    url('/world-gate.webp') center top / auto 330px no-repeat;
+}
+.workspace-account {
+  min-height: 52px;
+  margin-bottom: 35px;
+  background: #10191ee8;
+  border: 1px solid #ad875677;
+  border-radius: 2px;
+}
+.workspace-account .eyebrow {
+  color: var(--bronze-light);
+}
+.workspace-title h1 {
+  font-weight: 400;
+  font-size: clamp(34px, 3.2vw, 48px);
+}
+.project-card,
+.project-form,
+.project-empty,
+.project-detail-grid,
+.project-members,
+.simulation-console,
+.analytics-range,
+.analytics-metric,
+.analytics-chart,
+.account-panel {
+  background: var(--stone), linear-gradient(135deg, #1a242b, #121b20);
+  border-color: #8b704e99;
+  border-radius: 3px;
+  box-shadow:
+    inset 0 1px 0 #d9b88016,
+    0 8px 24px #0002;
+}
+.project-card:hover {
+  border-color: var(--bronze-light);
+}
+.project-cover {
+  height: 190px;
+  background:
+    linear-gradient(0deg, #101a23, transparent 80%),
+    url('/world-gate.webp') 75% center / auto 100%;
+}
+.cover-unity {
+  background-position: 90% center;
+}
+.cover-godot,
+.cover-custom {
+  background-position: 40% center;
+}
+.cover-orbit {
+  display: none;
+}
+.cover-engine {
+  color: #e4d1ae;
+}
+.cover-label {
+  color: #c9e4ef;
+}
+.project-card h2 {
+  font-size: 25px;
+}
+.project-members h2,
+.simulation-console h2 {
+  font-size: 28px;
+}
+.form-field input,
+.form-field textarea,
+.form-field select,
+.members-form input {
+  border-color: #817058;
+  border-radius: 3px;
+  background: #0e171e;
+}
+.form-field input::placeholder,
+.members-form input::placeholder {
+  color: #94a5af;
+}
+.secondary-button {
+  border-color: #9e815a;
+  border-radius: 2px;
+  background: #111c24a8;
+}
+.secondary-button:hover {
+  background: #243640;
+  border-color: var(--bronze-light);
+}
+.editor-note {
+  border-top-color: var(--bronze);
+}
+.account-badge {
+  border-color: #567785;
+  border-radius: 3px;
+}
+.analytics-metric strong {
+  color: #e7d5b5;
+}
+.analytics-bar {
+  fill: #79b6d0;
+}
+.analytics-gridline {
+  stroke: #4b575c;
+}
+.auth-shell {
+  background: var(--stone), var(--bg);
+}
+.auth-story {
+  background:
+    linear-gradient(180deg, #0c121633, #0c121688),
+    url('/world-gate.webp') 74% center / auto 100% no-repeat;
+  border-right-color: var(--bronze);
+}
+.auth-story h1 {
+  font-weight: 400;
+  text-shadow: 0 3px 14px #000;
+}
+.auth-story-body > p:not(.eyebrow) {
+  color: #d0d9dd;
+  text-shadow: 0 2px 5px #000;
+}
+.auth-form-container {
+  max-width: 460px;
+  padding: 30px;
+  border: 1px solid #ad875677;
+  background: #131d23dd;
+  box-shadow:
+    inset 0 0 0 5px #0c1419,
+    0 20px 60px #0003;
+}
+.auth-form-container h1 {
+  font-weight: 400;
+}
+.orbit-ring,
+.orbit-ring::before {
+  border-color: #bca37688;
+}
+.orbit-center {
+  color: var(--accent);
+  border-color: var(--bronze);
+  background: #12232ee8;
+  border-radius: 4px;
+  box-shadow: 0 0 35px #67b8db26;
+}
+.orbit-label {
+  color: #dfd2bb;
+}
+.auth-story-footer {
+  color: #cbd6dc;
+  text-shadow: 0 2px 4px #000;
+}
+:is(button, a, input, select, textarea, summary):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+@media (max-width: 1200px) {
+  .sidebar {
+    width: 230px;
+    padding: 22px 18px;
+  }
+  .brand {
+    font-size: 24px;
+  }
+  .shell main {
+    padding: 34px 24px 24px;
+  }
+  .page-heading {
+    padding: 0;
+  }
+  .onboarding-links {
+    padding: 0;
+  }
+  .health-main,
+  .connection-card {
+    padding: 25px 23px;
+  }
+  .service-row > div {
+    gap: 9px;
+  }
+  .service-row strong {
+    font-size: 16px;
+  }
+  .connection-flow > div:not(.connector) {
+    font-size: 20px;
+    gap: 12px;
+  }
+  .connection-card .connector span {
+    margin-left: 38px;
+    font-size: 8px;
+  }
+  .workspace-page {
+    grid-template-columns: 230px minmax(0, 1fr);
+  }
+  .workspace-header .brand {
+    font-size: 23px;
+  }
+  .workspace-main {
+    padding: 28px;
+  }
+}
+@media (max-width: 1000px) {
+  .health-panel {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .connection-card {
+    display: block;
+  }
+  .connection-flow {
+    max-width: 400px;
+  }
+  .page-heading h1 {
+    font-size: 40px;
+  }
+  .topbar {
+    padding: 0 24px;
+  }
+  .sidebar nav a {
+    font-size: 14px;
+  }
+  .auth-form-container {
+    padding: 25px;
+  }
+}
+@media (max-width: 720px) {
+  .workspace-page {
+    display: block;
+  }
+  .workspace-header {
+    min-height: 0;
+    padding: 18px 20px;
+    background: var(--stone), var(--sidebar);
+    border-right: 0;
+    border-bottom: 1px solid var(--bronze);
+  }
+  .workspace-header .brand {
+    padding-bottom: 14px;
+    margin-bottom: 14px;
+  }
+  .workspace-main {
+    padding: 24px 20px;
+  }
+  .workspace-account {
+    align-items: start;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    padding: 12px;
+  }
+  .workspace-account .eyebrow {
+    font-size: 9px;
+  }
+  .auth-story {
+    background-position: 70% 40%;
+    background-size: cover;
+  }
+  .auth-form-side {
+    padding: 28px 18px;
+  }
+  .auth-form-container {
+    padding: 26px 22px;
+  }
+}
+@media (max-width: 640px) {
+  .sidebar {
+    width: 100%;
+    padding: 18px 20px 16px;
+    background: var(--stone), var(--sidebar);
+    border-right: 0;
+    border-bottom: 1px solid var(--bronze);
+  }
+  .sidebar .brand {
+    padding-bottom: 14px;
+    font-size: 27px;
+  }
+  .sidebar nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin-top: 14px;
+  }
+  .sidebar nav a {
+    font-size: 13px;
+    min-height: 44px;
+    padding: 9px 10px;
+  }
+  .topbar {
+    height: auto;
+    min-height: 68px;
+    padding: 12px 20px;
+    gap: 10px;
+    flex-wrap: wrap;
+    font-size: 12px;
+  }
+  .environment {
+    font-size: 11px;
+    padding: 6px 10px;
+  }
+  .shell .content {
+    background-position: 0 68px;
+    background-size: auto 325px;
+  }
+  .shell main {
+    padding: 30px 18px 22px;
+  }
+  .page-heading {
+    min-height: 0;
+    margin-bottom: 18px;
+  }
+  .page-heading .eyebrow {
+    font-size: 9px;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+  .page-heading .eyebrow::after {
+    width: 30px;
+  }
+  .page-heading h1 {
+    font-size: 37px;
+  }
+  .intro {
+    font-size: 15px;
+  }
+  .onboarding-links {
+    margin-bottom: 25px;
+  }
+  .health-main,
+  .connection-card {
+    padding: 25px 20px;
+  }
+  .health-kicker {
+    font-size: 9px;
+    gap: 8px;
+    letter-spacing: 0.08em;
+  }
+  .live-tag {
+    font-size: 8px;
+    padding: 5px;
+  }
+  .health-main h2 {
+    font-size: 29px;
+  }
+  .health-description {
+    font-size: 14px;
+  }
+  .service-row {
+    gap: 7px;
+  }
+  .service-row strong {
+    font-size: 16px;
+  }
+  .service-state {
+    font-size: 10px;
+    padding: 4px 6px;
+  }
+  .service-state.good::before {
+    display: none;
+  }
+  .service-tech {
+    display: none;
+  }
+  .connection-flow > div:not(.connector) {
+    font-size: 22px;
+  }
+  .connection-card small {
+    font-size: 13px;
+  }
+  .connection-card .connector span {
+    font-size: 9px;
+  }
+  .roadmap-card {
+    padding: 18px 15px;
+  }
+  .roadmap-card h3 {
+    font-size: 21px;
+  }
+  .roadmap-card p {
+    font-size: 12px;
+  }
+  .phase {
+    font-size: 10px;
+  }
+  .main-footer {
+    font-size: 9px;
+  }
+}
