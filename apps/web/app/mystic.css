@@ -1,3 +1,64 @@
+.activity-filter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 16px;
+}
+.activity-filter .form-field {
+  flex: 1 1 260px;
+}
+.activity-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border: 1px solid var(--bronze);
+  background: var(--panel);
+}
+.activity-list li {
+  padding: 26px;
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 24px;
+  border-bottom: 1px solid var(--border);
+}
+.activity-list li:last-child {
+  border-bottom: 0;
+}
+.activity-event {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.activity-event .eyebrow {
+  display: block;
+  margin-bottom: 8px;
+}
+.activity-event h2 {
+  font-size: 24px;
+}
+.activity-event p,
+.activity-list time {
+  color: var(--muted);
+  font-size: 13px;
+}
+.activity-list time {
+  flex-shrink: 0;
+}
+.activity-event summary {
+  cursor: pointer;
+  min-height: 44px;
+  padding: 10px 0;
+  color: var(--accent);
+}
+.activity-event code {
+  font-size: 12px;
+}
+@media (max-width: 900px) {
+  .activity-list li {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
 /* GameOpen: charcoal stone, aged bronze and restrained blue light.
    Shared presentation only; existing layouts, data and interactions are retained. */
 :root {

@@ -1,0 +1,23 @@
+name: Container smoke test
+on: [push, pull_request]
+jobs:
+  container:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: node scripts/setup-env.mjs
+      - run: docker compose --env-file .env -f infra/compose.app.yaml up --build -d --wait --wait-timeout 180
+      - name: Verify HTTPS readiness and page
+        run: |
+          curl --retry 10 --retry-connrefused --retry-delay 2 -fk https://localhost:8443/api/v1/health/ready
+          curl -fk https://localhost:8443/ | grep -q GameOpen
+      - name: Container logs
+        if: failure()
+        run: docker compose --env-file .env -f infra/compose.app.yaml logs --no-color
+      - name: Stop isolated CI stack
+        if: always()
+        run: docker compose --env-file .env -f infra/compose.app.yaml down -v

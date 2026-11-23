@@ -108,6 +108,17 @@ export default async function ProjectDetail({ params }: { params: Promise<{ id: 
           archived={project.state === 'archived'}
         />
       )}
+      {project.role === 'owner' && (
+        <section className="lifecycle-panel">
+          <div>
+            <h2>Activity log</h2>
+            <p>Review project changes, membership updates and session transitions.</p>
+          </div>
+          <Link className="primary-button" href={`/workspace/projects/${id}/activity`}>
+            View activity <span aria-hidden="true">↗</span>
+          </Link>
+        </section>
+      )}
       {project.role === 'owner' && <ProjectLifecycle project={project} />}
     </>
   );

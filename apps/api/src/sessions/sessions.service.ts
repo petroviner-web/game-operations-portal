@@ -4,6 +4,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { recordActivity } from '../projects/activity';
 import type { PoolClient } from 'pg';
 import { DatabaseService } from '../database/database.service';
 import type { CreateSession, JoinSession, ListSessions } from './sessions.validation';
@@ -80,6 +81,7 @@ export class SessionsService {
         'INSERT INTO game_sessions(project_id,name,max_players) VALUES ($1,$2,$3) RETURNING id',
         [project, input.name, input.maxPlayers],
       );
+      await recordActivity(client, project, owner, 'session.created', result.rows[0]!.id);
       return this.snapshot(client, project, result.rows[0]!.id);
     });
   }
@@ -138,7 +140,20 @@ export class SessionsService {
       if (parent.archived_at)
         conflict('PROJECT_ARCHIVED', 'Restore this project before changing its sessions.');
       await work(client, session);
-      return this.snapshot(client, project, id);
+      const updated = await this.snapshot(client, project, id);
+      if (updated.state !== session.state)
+        await recordActivity(
+          client,
+          project,
+          owner,
+          updated.state === 'RUNNING'
+            ? 'session.started'
+            : updated.endReason === 'CANCELLED'
+              ? 'session.cancelled'
+              : 'session.ended',
+          id,
+        );
+      return updated;
     });
   }
   join(owner: string, project: string, id: string, input: JoinSession) {
