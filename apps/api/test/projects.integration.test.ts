@@ -152,6 +152,8 @@ test(
         'another owner cannot list, read, update, archive, restore, or use a project cursor',
         async () => {
           assert.deepEqual((await (await bob.request('')).json()).items, []);
+          assert.equal((await bob.request(`/${id}/activity`)).status, 404);
+          assert.equal((await anonymous.request(`/${id}/activity`)).status, 401);
           const foreign = await bob.request(`/${id}`);
           const nonexistent = await bob.request(`/${randomUUID()}`);
           assert.equal(foreign.status, 404);
@@ -345,6 +347,13 @@ test(
           const members = (await (await alice.request(`/${projectId}/members`)).json()).members;
           assert.equal(members.length, 1);
           assert.equal(members[0].id, bob.userId);
+          assert.equal((await bob.request(`/${projectId}/activity`)).status, 404);
+          const history = (await (await alice.request(`/${projectId}/activity`)).json()).items;
+          assert.equal(
+            history.filter((event: { action: string }) => event.action === 'member.added').length,
+            1,
+          );
+          assert.equal(history[0].actorId, alice.userId);
           assert.equal(
             (await (await bob.request(`/${projectId}`)).json()).project.role,
             'developer',

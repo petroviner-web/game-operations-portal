@@ -4,6 +4,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { recordActivity, type ActivityQuery } from './activity';
 import { DatabaseService } from '../database/database.service';
 import type { CreateProject, ListProjects, UpdateProject } from './projects.validation';
 
@@ -48,11 +49,61 @@ export class ProjectsService {
   constructor(private readonly db: DatabaseService) {}
 
   async create(ownerId: string, input: CreateProject) {
-    const result = await this.db.query<ProjectRow>(
-      'INSERT INTO projects (owner_id, name, description, engine) VALUES ($1, $2, $3, $4) RETURNING *',
-      [ownerId, input.name, input.description, input.engine],
+    return this.db.transaction(async (client) => {
+      const result = await client.query<ProjectRow>(
+        'INSERT INTO projects (owner_id, name, description, engine) VALUES ($1, $2, $3, $4) RETURNING *',
+        [ownerId, input.name, input.description, input.engine],
+      );
+      await recordActivity(client, result.rows[0]!.id, ownerId, 'project.created');
+      return projectView(result.rows[0]!);
+    });
+  }
+
+  async activity(owner: string, id: string, input: ActivityQuery) {
+    const access = await this.db.query('SELECT 1 FROM projects WHERE id=$1 AND owner_id=$2', [
+      id,
+      owner,
+    ]);
+    if (!access.rowCount) missing();
+    if (input.cursor) {
+      const cursor = await this.db.query(
+        'SELECT 1 FROM project_activity WHERE id=$1 AND project_id=$2',
+        [input.cursor, id],
+      );
+      if (!cursor.rowCount)
+        throw new BadRequestException({
+          code: 'INVALID_CURSOR',
+          message: 'Invalid activity page. Return to the first page.',
+        });
+    }
+    const result = await this.db.query<{
+      id: string;
+      action: string;
+      actor_id: string | null;
+      actor_email: string | null;
+      target_id: string | null;
+      created_at: Date;
+    }>(
+      `
+      SELECT a.*, u.email_normalized AS actor_email FROM project_activity a
+      JOIN projects p ON p.id=a.project_id LEFT JOIN users u ON u.id=a.actor_id
+      WHERE a.project_id=$1 AND p.owner_id=$2 AND ($3::text IS NULL OR a.action=$3)
+      AND ($4::uuid IS NULL OR (a.created_at,a.id)<(SELECT c.created_at,c.id FROM project_activity c WHERE c.id=$4 AND c.project_id=$1))
+      ORDER BY a.created_at DESC,a.id DESC LIMIT $5`,
+      [id, owner, input.action ?? null, input.cursor ?? null, input.limit + 1],
     );
-    return projectView(result.rows[0]!);
+    const rows = result.rows.slice(0, input.limit);
+    return {
+      items: rows.map((row) => ({
+        id: row.id,
+        action: row.action,
+        actorId: row.actor_id,
+        actorEmail: row.actor_email,
+        targetId: row.target_id,
+        createdAt: row.created_at.toISOString(),
+      })),
+      nextCursor: result.rows.length > input.limit ? rows.at(-1)!.id : null,
+    };
   }
 
   async list(ownerId: string, input: ListProjects) {
@@ -123,6 +174,7 @@ export class ProjectsService {
           input.engine ?? current.engine,
         ],
       );
+      await recordActivity(client, id, ownerId, 'project.updated');
       return projectView({ ...result.rows[0]!, access_role: access.rows[0]!.access_role });
     });
   }
@@ -158,10 +210,12 @@ export class ProjectsService {
           message: 'Restore the project before changing members.',
         });
       // Generic result avoids a direct account-existence response. The owner may inspect members afterwards.
-      await client.query(
-        'INSERT INTO project_members(project_id,user_id) SELECT $1,u.id FROM users u WHERE u.email_normalized=$2 AND u.id<>$3 ON CONFLICT DO NOTHING',
+      const added = await client.query<{ user_id: string }>(
+        'INSERT INTO project_members(project_id,user_id) SELECT $1,u.id FROM users u WHERE u.email_normalized=$2 AND u.id<>$3 ON CONFLICT DO NOTHING RETURNING user_id',
         [id, email, owner],
       );
+      if (added.rows[0])
+        await recordActivity(client, id, owner, 'member.added', added.rows[0].user_id);
       return { message: 'If an eligible account exists, it has been added as a developer.' };
     });
   }
@@ -173,10 +227,11 @@ export class ProjectsService {
         [owner, id],
       );
       if (!project.rowCount) missing();
-      await client.query('DELETE FROM project_members WHERE project_id=$1 AND user_id=$2', [
-        id,
-        userId,
-      ]);
+      const removed = await client.query(
+        'DELETE FROM project_members WHERE project_id=$1 AND user_id=$2',
+        [id, userId],
+      );
+      if (removed.rowCount) await recordActivity(client, id, owner, 'member.removed', userId);
       return { message: 'Access removed.' };
     });
   }
@@ -209,6 +264,7 @@ export class ProjectsService {
         WHERE owner_id=$1 AND id=$2 RETURNING *`,
         [ownerId, id, archived],
       );
+      await recordActivity(client, id, ownerId, archived ? 'project.archived' : 'project.restored');
       return projectView(result.rows[0]!);
     });
   }

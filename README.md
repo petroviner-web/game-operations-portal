@@ -81,3 +81,9 @@ Playwright starts its own API on 4100 and Next.js on 3100 with an isolated `.nex
 ## Final review checkpoint
 
 Follow the [five-minute demo and engineering questions](docs/demo-and-review.md), then explain a failed request using the [operations guide](docs/operations.md). Review [analytics definitions, consistency and limits](docs/analytics.md): explain event cohorts versus current snapshots and why missing duration is null. Six milestones complete the MVP; real game networking, password recovery, load guarantees and tested backup restoration remain deliberate follow-up work.
+
+## Portfolio engineering additions
+
+- Owner-only [activity history](docs/activity.md) records project changes, membership changes and session lifecycle transitions atomically with the business operation.
+- [Container demo](docs/containers.md): multi-stage production image, PostgreSQL, local HTTPS and CI smoke checks.
+- [AI-assisted development record](docs/ai-workflow.md): implementation decisions, corrections and a human-review checklist.

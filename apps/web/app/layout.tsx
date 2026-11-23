@@ -5,6 +5,7 @@ import './projects.css';
 import './sessions.css';
 import './analytics.css';
 import './launcher.css';
+import './mystic.css';
 
 export const metadata: Metadata = {
   title: 'GameOpen / Developer console',

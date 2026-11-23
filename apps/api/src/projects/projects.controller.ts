@@ -14,6 +14,7 @@ import {
 } from '@nestjs/common';
 import { MemberRateLimitGuard } from './member-rate-limit.guard';
 import { AuthRequest } from '../auth/auth.types';
+import { activityQuerySchema } from './activity';
 import { ProjectsService } from './projects.service';
 import {
   createProjectSchema,
@@ -44,6 +45,18 @@ export class ProjectsController {
   @Get(':id')
   async get(@Req() request: AuthRequest, @Param('id', new ParseUUIDPipe()) id: string) {
     return { project: await this.projects.get(request.user!.id, id) };
+  }
+  @Get(':id/activity')
+  activity(
+    @Req() request: AuthRequest,
+    @Param('id', new ParseUUIDPipe()) id: string,
+    @Query() query: unknown,
+  ) {
+    return this.projects.activity(
+      request.user!.id,
+      id,
+      parseProjectInput(activityQuerySchema, query),
+    );
   }
   @Get(':id/members')
   async members(@Req() request: AuthRequest, @Param('id', new ParseUUIDPipe()) id: string) {
