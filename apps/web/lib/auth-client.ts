@@ -8,8 +8,18 @@ export class AuthError extends Error {
 }
 
 export async function authMutation(
-  action: 'login' | 'register' | 'logout' | `accounts/${string}/status`,
-  body?: { email: string; password: string } | { suspended: boolean },
+  action:
+    | 'forgot-password'
+    | 'reset-password'
+    | 'login'
+    | 'register'
+    | 'logout'
+    | `accounts/${string}/status`,
+  body?:
+    | { email: string }
+    | { token: string; password: string }
+    | { email: string; password: string }
+    | { suspended: boolean },
 ) {
   let response: Response;
   try {

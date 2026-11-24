@@ -89,3 +89,5 @@ Follow the [five-minute demo and engineering questions](docs/demo-and-review.md)
 - [AI-assisted development record](docs/ai-workflow.md): implementation decisions, corrections and a human-review checklist.
 
 Account administration: set ADMIN_USER_ID on the API service to the UUID of a verified existing operator account and restart. The operator can open /workspace/accounts to suspend or reactivate users. Suspension revokes all login sessions. Leave ADMIN_USER_ID unset to disable admin access.
+
+Password recovery uses Resend. Configure RESEND_API_KEY and PASSWORD_RESET_FROM (a verified sender) in the API service environment. APP_ORIGIN must match the public HTTPS origin. Reset links expire after 30 minutes. A new request replaces the previous link.

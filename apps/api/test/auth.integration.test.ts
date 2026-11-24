@@ -285,6 +285,50 @@ test(
         );
         assert.equal((await post('login', { email: emails[2], password })).status, 401);
       });
+      await t.test('recovery links rotate, work once and revoke active sessions', async (t) => {
+        const account = `recover-${randomUUID()}@example.test`;
+        emails.push(account);
+        const realFetch = globalThis.fetch;
+        const tokens: string[] = [];
+        t.mock.method(
+          globalThis,
+          'fetch',
+          (input: Parameters<typeof fetch>[0], init?: RequestInit) => {
+            if (input !== 'https://api.resend.com/emails') return realFetch(input, init);
+            const mail = JSON.parse(String(init?.body));
+            assert.deepEqual(mail.to, [account]);
+            tokens.push(mail.text.match(/reset-password#([a-f0-9]{64})/)[1]);
+            return Promise.resolve(new Response('{}'));
+          },
+        );
+        const key = process.env.RESEND_API_KEY,
+          sender = process.env.PASSWORD_RESET_FROM;
+        try {
+          process.env.RESEND_API_KEY = 'test';
+          process.env.PASSWORD_RESET_FROM = 'portal@example.test';
+          assert.equal((await post('register', { email: account, password })).status, 201);
+          const session = jar.get('gameops_session')!;
+          for (const address of [emails[1], account, account])
+            assert.equal((await post('forgot-password', { email: address })).status, 202);
+          assert.equal(tokens.length, 2);
+          const replacement = 'a different secure password';
+          const reset = (token: string) => post('reset-password', { token, password: replacement });
+          assert.equal((await reset(tokens[0]!)).status, 400);
+          assert.equal((await reset(tokens[1]!)).status, 204);
+          assert.equal((await reset(tokens[1]!)).status, 400);
+          assert.equal((await me(session)).status, 401);
+          assert.equal((await post('login', { email: account, password })).status, 401);
+          assert.equal(
+            (await post('login', { email: account, password: replacement })).status,
+            200,
+          );
+        } finally {
+          if (key === undefined) delete process.env.RESEND_API_KEY;
+          else process.env.RESEND_API_KEY = key;
+          if (sender === undefined) delete process.env.PASSWORD_RESET_FROM;
+          else process.env.PASSWORD_RESET_FROM = sender;
+        }
+      });
     } finally {
       await app.close();
       await db.query('DELETE FROM users WHERE email_normalized = ANY($1::text[])', [emails]);

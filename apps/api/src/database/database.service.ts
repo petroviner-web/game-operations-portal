@@ -3,7 +3,7 @@ import { Pool, PoolClient, QueryResultRow } from 'pg';
 import { readConfig } from '../config';
 
 export const INITIAL_MIGRATION = '001_users.sql';
-export const REQUIRED_MIGRATION = '007_account_status.sql';
+export const REQUIRED_MIGRATION = '008_password_recovery.sql';
 
 @Injectable()
 export class DatabaseService implements OnModuleDestroy {

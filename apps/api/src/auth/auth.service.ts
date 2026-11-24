@@ -77,7 +77,7 @@ export class AuthService implements OnModuleInit, OnModuleDestroy {
           code: 'REGISTRATION_FAILED',
           message: 'Unable to create this account. Try signing in instead.',
         });
-      const session = await this.createSession(client, user.id, previousToken);
+      const session = await this.createSession(client, user.id, previousToken, user.password_hash);
       return { user: publicUser(user), ...session };
     });
   }
@@ -94,7 +94,7 @@ export class AuthService implements OnModuleInit, OnModuleDestroy {
         message: 'Email or password is incorrect.',
       });
     const session = await this.db.transaction((client) =>
-      this.createSession(client, user.id, previousToken),
+      this.createSession(client, user.id, previousToken, user.password_hash),
     );
     return { user: publicUser(user), ...session };
   }
@@ -102,11 +102,12 @@ export class AuthService implements OnModuleInit, OnModuleDestroy {
   private async createSession(
     client: import('pg').PoolClient,
     userId: string,
-    previousToken?: string,
+    previousToken: string | undefined,
+    expectedHash: string,
   ) {
     const active = await client.query(
-      'SELECT id FROM users WHERE id = $1 AND NOT suspended FOR SHARE',
-      [userId],
+      'SELECT id FROM users WHERE id = $1 AND NOT suspended AND password_hash = $2 FOR SHARE',
+      [userId, expectedHash],
     );
     if (!active.rowCount) throw new UnauthorizedException('Email or password is incorrect.');
     const token = randomBytes(32).toString('hex');
