@@ -1,6 +1,7 @@
 import type { Request } from 'express';
 
 export interface SessionUser {
+  isAdmin?: true;
   id: string;
   email: string;
   createdAt: string;

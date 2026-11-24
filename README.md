@@ -87,3 +87,5 @@ Follow the [five-minute demo and engineering questions](docs/demo-and-review.md)
 - Owner-only [activity history](docs/activity.md) records project changes, membership changes and session lifecycle transitions atomically with the business operation.
 - [Container demo](docs/containers.md): multi-stage production image, PostgreSQL, local HTTPS and CI smoke checks.
 - [AI-assisted development record](docs/ai-workflow.md): implementation decisions, corrections and a human-review checklist.
+
+Account administration: set ADMIN_USER_ID on the API service to the UUID of a verified existing operator account and restart. The operator can open /workspace/accounts to suspend or reactivate users. Suspension revokes all login sessions. Leave ADMIN_USER_ID unset to disable admin access.

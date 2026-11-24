@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 import { DatabaseModule } from '../database/database.module';
+import { AccountsController } from './accounts.controller';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { CsrfService } from './csrf.service';
@@ -10,7 +11,7 @@ import { RateLimitGuard } from './rate-limit.guard';
 
 @Module({
   imports: [DatabaseModule],
-  controllers: [AuthController],
+  controllers: [AuthController, AccountsController],
   providers: [
     AuthService,
     CsrfService,

@@ -26,7 +26,12 @@ interface UserRow {
   password_hash: string;
 }
 function publicUser(user: UserRow): SessionUser {
-  return { id: user.id, email: user.email_normalized, createdAt: user.created_at.toISOString() };
+  return {
+    ...(user.id === process.env.ADMIN_USER_ID ? { isAdmin: true as const } : {}),
+    id: user.id,
+    email: user.email_normalized,
+    createdAt: user.created_at.toISOString(),
+  };
 }
 
 @Injectable()
@@ -99,6 +104,11 @@ export class AuthService implements OnModuleInit, OnModuleDestroy {
     userId: string,
     previousToken?: string,
   ) {
+    const active = await client.query(
+      'SELECT id FROM users WHERE id = $1 AND NOT suspended FOR SHARE',
+      [userId],
+    );
+    if (!active.rowCount) throw new UnauthorizedException('Email or password is incorrect.');
     const token = randomBytes(32).toString('hex');
     const expiresAt = new Date(Date.now() + this.config.sessionTtlMs);
     if (previousToken && /^[a-f0-9]{64}$/.test(previousToken)) {
@@ -119,7 +129,7 @@ export class AuthService implements OnModuleInit, OnModuleDestroy {
       `
       SELECT u.id, u.email_normalized, u.created_at FROM users u
       JOIN auth_sessions s ON s.user_id = u.id
-      WHERE s.token_hash = $1 AND s.expires_at > now()`,
+      WHERE NOT u.suspended AND s.token_hash = $1 AND s.expires_at > now()`,
       [hashToken(token)],
     );
     return result.rows[0] ? publicUser(result.rows[0]) : null;

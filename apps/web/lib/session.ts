@@ -2,6 +2,7 @@ import 'server-only';
 import { cookies } from 'next/headers';
 
 export interface SessionUser {
+  isAdmin?: true;
   id: string;
   email: string;
   createdAt: string;
