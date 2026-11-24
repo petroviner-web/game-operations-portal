@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getSession } from '../../lib/session';
 import { AuthForm } from '../components/auth-form';
@@ -10,6 +11,7 @@ export default async function LoginPage() {
   return (
     <AuthShell>
       <AuthForm mode="login" />
+      <Link href="/forgot-password">Forgot your password?</Link>
     </AuthShell>
   );
 }
