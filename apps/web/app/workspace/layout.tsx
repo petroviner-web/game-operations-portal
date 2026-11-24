@@ -43,6 +43,7 @@ export default async function WorkspaceLayout({ children }: { children: React.Re
           <Link href="/workspace?state=archived">
             <span aria-hidden="true">▣</span> Archived
           </Link>
+          {user.isAdmin && <Link href="/workspace/accounts">Account management</Link>}
           <span>GAMEOPEN</span>
           <Link href="/">
             <span aria-hidden="true">◉</span> System overview
